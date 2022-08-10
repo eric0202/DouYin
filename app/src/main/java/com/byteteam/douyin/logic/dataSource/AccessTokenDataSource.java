@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 public interface AccessTokenDataSource {
 
     // 从数据库获取AccessToken
-    Maybe<AccessToken> getAccessToken(long curTime);
+    Maybe<AccessToken> getAccessToken();
 
     // 添加AccessToken到数据库
     Completable insert(AccessToken accessToken);

@@ -1,4 +1,4 @@
-package com.byteteam.douyin.logic.network;
+package com.byteteam.douyin.logic.factory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

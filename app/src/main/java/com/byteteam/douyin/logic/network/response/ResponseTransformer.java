@@ -12,7 +12,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * @introduction：
+ * @introduction： 请求过程线程调度封装
  * @author： 林锦焜
  * @time： 2022/8/8 18:37
  */

@@ -4,7 +4,7 @@ import com.byteteam.douyin.MyApplication;
 import com.byteteam.douyin.logic.database.dao.AccessTokenDao;
 import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.database.model.AccessToken;
-import com.byteteam.douyin.logic.network.NetWorkFactory;
+import com.byteteam.douyin.logic.factory.NetWorkFactory;
 import com.byteteam.douyin.logic.network.response.ResponseTransformer;
 import com.byteteam.douyin.logic.network.service.TokenService;
 
@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 /**
- * @introduction：
+ * @introduction： AccessToken仓库类
  * @author： 林锦焜
  * @time： 2022/8/7 18:08
  */
@@ -28,14 +28,21 @@ public class AccessTokenRepository implements AccessTokenDataSource {
         this.accessTokenDao = accessTokenDao;
     }
 
-
+    /**
+     * 向数据库查询AccessToken
+     * @return Maybe<AccessToken>
+     */
     @Override
-    public Maybe<AccessToken> getAccessToken(long curTime) {
-        return accessTokenDao.getAccessToken(curTime)
+    public Maybe<AccessToken> getAccessToken() {
+        return accessTokenDao.getAccessToken(System.currentTimeMillis())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 向数据库插入一条AccessToken
+     * @return Completable
+     */
     @Override
     public Completable insert(AccessToken accessToken) {
         return accessTokenDao.insert(accessToken)
@@ -43,6 +50,11 @@ public class AccessTokenRepository implements AccessTokenDataSource {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 联网申请AccessToken
+     * @param authCode 授权码
+     * @return Completable
+     */
     @Override
     public Observable<AccessToken> requestAccessToken(String authCode) {
         Retrofit retrofit = NetWorkFactory.provideRetrofit();

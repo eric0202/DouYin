@@ -10,6 +10,11 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
+/**
+ * @introduction： ClientToken Dao类
+ * @author： 林锦焜
+ * @time： 2022/8/10 13:37
+ */
 @Dao
 public interface ClientTokenDao {
 

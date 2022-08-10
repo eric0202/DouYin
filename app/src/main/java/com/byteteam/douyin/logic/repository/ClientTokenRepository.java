@@ -3,29 +3,20 @@ package com.byteteam.douyin.logic.repository;
 import com.byteteam.douyin.MyApplication;
 import com.byteteam.douyin.logic.dataSource.ClientTokenDataSource;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
-import com.byteteam.douyin.logic.database.model.AccessToken;
 import com.byteteam.douyin.logic.database.model.ClientToken;
-import com.byteteam.douyin.logic.network.NetWorkFactory;
+import com.byteteam.douyin.logic.factory.NetWorkFactory;
 import com.byteteam.douyin.logic.network.response.ResponseTransformer;
 import com.byteteam.douyin.logic.network.service.TokenService;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
-import io.reactivex.MaybeSource;
-import io.reactivex.MaybeTransformer;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 /**
- * @introduction：
+ * @introduction： ClientToken仓库类
  * @author： 林锦焜
  * @time： 2022/8/8 20:03
  */
@@ -37,9 +28,13 @@ public class ClientTokenRepository implements ClientTokenDataSource {
         this.clientTokenDao = clientTokenDao;
     }
 
+    /**
+     * 获取ClientToken
+     * @return Maybe<ClientToken>
+     */
     @Override
-    public Maybe<ClientToken> getClientToken(long curTime) {
-        return clientTokenDao.getClientToken(curTime)
+    public Maybe<ClientToken> getClientToken() {
+        return clientTokenDao.getClientToken(System.currentTimeMillis())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 // 当数据库无数据时会发送这条默认数据
@@ -55,6 +50,7 @@ public class ClientTokenRepository implements ClientTokenDataSource {
                 });
     }
 
+    // 保存一条ClientToken
     @Override
     public Completable insert(ClientToken clientToken) {
         return clientTokenDao.insert(clientToken)

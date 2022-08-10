@@ -9,6 +9,11 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
+/**
+ * @introduction： 凭证Token网络接口
+ * @author： 林锦焜
+ * @time： 2022/8/8 20:42
+ */
 public interface TokenService {
 
     @FormUrlEncoded

@@ -27,6 +27,7 @@ public class NetException extends Exception {
     }
 
     public static NetException handleException(Throwable e) {
+        e.printStackTrace();
         NetException ex;
         if (e instanceof JsonParseException
                 || e instanceof JSONException

@@ -5,32 +5,39 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.byteteam.douyin.logic.database.converter.StringArrayConverters;
 import com.byteteam.douyin.logic.database.dao.AccessTokenDao;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
+import com.byteteam.douyin.logic.database.dao.RankItemDao;
 import com.byteteam.douyin.logic.database.model.AccessToken;
 import com.byteteam.douyin.logic.database.model.ClientToken;
+import com.byteteam.douyin.logic.database.model.RankItem;
 
 /**
- * @introduction：
+ * @introduction： 数据库类
  * @author： 林锦焜
  * @time： 2022/8/7 18:10
  */
-@Database(entities = {AccessToken.class, ClientToken.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
+@Database(entities = {AccessToken.class, ClientToken.class, RankItem.class}, version = 2)
+@TypeConverters({StringArrayConverters.class})
+public abstract class MyDB extends RoomDatabase {
 
     public abstract AccessTokenDao accessTokenDao();
 
     public abstract ClientTokenDao clientTokenDao();
 
-    private static volatile AppDatabase INSTANCE;
+    public abstract RankItemDao rankItemDao();
 
-    public static AppDatabase get(Context context) {
+    private static volatile MyDB INSTANCE;
+
+    public static MyDB get(Context context) {
         if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
+            synchronized (MyDB.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "my-database").build();
+                            MyDB.class, "my-database").build();
                 }
             }
         }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.byteteam.douyin.util.StringUtil"/>
+        <variable
+            name="movie"
+            type="com.byteteam.douyin.logic.database.model.RankItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_poster"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_weight="3"
+            android:scaleType="centerCrop"
+            app:srcCompat="@{movie.poster,default = `@mipmap/ic_film`}" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="5dp">
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{movie.name, default = `片名`}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+            <TextView
+                android:id="@+id/text_directors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`导演：` + StringUtil.arrayToString(movie.directors),default = `导演`}"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+            <TextView
+                android:id="@+id/text_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{StringUtil.arrayToString(movie.tags),default = `剧情`}"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+            <TextView
+                android:id="@+id/text_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{movie.releaseDate + `上映`,default = `上映时间`}"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+            <TextView
+                android:id="@+id/text_hot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{movie.hot + `热度`,default = `热度`}"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="购票" />
+
+    </LinearLayout>
+</layout>
