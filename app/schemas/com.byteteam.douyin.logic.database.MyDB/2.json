@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "8909a76939783a7e484f8d16f59e8e0a",
+    "identityHash": "f49a79421004563e084b0c55e91fd7d6",
     "entities": [
       {
         "tableName": "AccessToken",
@@ -82,7 +82,7 @@
       },
       {
         "tableName": "RankItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `actors` TEXT, `maoyan_id` TEXT, `name` TEXT, `name_en` TEXT, `areas` TEXT, `directors` TEXT, `release_date` TEXT, `hot` INTEGER NOT NULL, `type` INTEGER NOT NULL, `poster` TEXT, `tags` TEXT, `version` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `directors` TEXT, `areas` TEXT, `actors` TEXT, `discussion_hot` INTEGER NOT NULL, `hot` INTEGER NOT NULL, `search_hot` INTEGER NOT NULL, `topic_hot` INTEGER NOT NULL, `name` TEXT, `poster` TEXT, `release_date` TEXT, `tags` TEXT, `name_en` TEXT, `maoyan_id` TEXT, `type` INTEGER NOT NULL, `version` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mid",
@@ -91,26 +91,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "actors",
-            "columnName": "actors",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "maoyanId",
-            "columnName": "maoyan_id",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "nameEn",
-            "columnName": "name_en",
+            "fieldPath": "directors",
+            "columnName": "directors",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -121,8 +103,44 @@
             "notNull": false
           },
           {
-            "fieldPath": "directors",
-            "columnName": "directors",
+            "fieldPath": "actors",
+            "columnName": "actors",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "discussionHot",
+            "columnName": "discussion_hot",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hot",
+            "columnName": "hot",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "searchHot",
+            "columnName": "search_hot",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topicHot",
+            "columnName": "topic_hot",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poster",
+            "columnName": "poster",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -133,28 +151,28 @@
             "notNull": false
           },
           {
-            "fieldPath": "hot",
-            "columnName": "hot",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "tags",
+            "columnName": "tags",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nameEn",
+            "columnName": "name_en",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maoyanId",
+            "columnName": "maoyan_id",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "type",
             "columnName": "type",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "poster",
-            "columnName": "poster",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "tags",
-            "columnName": "tags",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "version",
@@ -176,7 +194,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8909a76939783a7e484f8d16f59e8e0a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f49a79421004563e084b0c55e91fd7d6')"
     ]
   }
 }
