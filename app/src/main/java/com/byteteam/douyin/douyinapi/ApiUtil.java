@@ -15,7 +15,7 @@ import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 public class ApiUtil {
 
     // 权限集
-    private static final String mScope = "user_info,trial.whitelist,renew_refresh_token,discovery.ent";
+    private static final String mScope = "user_info,trial.whitelist,renew_refresh_token,discovery.ent,fans.list,following.list,video.list,video.data";
 
     // 调用授权
     public static boolean sendAuth(Activity activity) {

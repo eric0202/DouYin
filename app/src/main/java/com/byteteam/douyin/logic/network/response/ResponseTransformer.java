@@ -41,6 +41,7 @@ public class ResponseTransformer<T extends DouYinBaseData> implements Observable
                 })
                 .flatMap((Function<DouYinResponse<T>, ObservableSource<T>>) tDouYinResponse -> {
                     T data = tDouYinResponse.getData();
+                    System.out.println("data:" + data);
                     // 请求成功
                     if (data != null && data.getErrorCode() == 0) {
                         return Observable.just(data);
