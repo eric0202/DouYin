@@ -7,6 +7,9 @@ package com.byteteam.douyin.util;
  */
 public class StringUtil {
 
+    /**
+     * 将字符串数组转换成字符串
+     */
     public static String arrayToString(String[] value) {
         StringBuilder result = new StringBuilder();
         if (value != null) {
@@ -18,6 +21,17 @@ public class StringUtil {
             }
         }
         return result.toString();
+    }
+
+    /**
+     * 将大数转换成以万的计量方式
+     */
+    public static String numNarrow(long num) {
+        if (num < 10000) {
+            return String.valueOf(num);
+        } else {
+            return String.format("%.1f万",num / 10000.0);
+        }
     }
 
 }

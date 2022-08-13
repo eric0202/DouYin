@@ -37,6 +37,23 @@ public class RankFragment extends Fragment {
         // 设置点击跳转电影榜单页面
         binding.filmCardView.setOnClickListener((v) ->{
             Intent intent = new Intent(requireContext(), RankActivity.class);
+            intent.putExtra("type",1);
+            intent.putExtra("version",0);
+            requireContext().startActivity(intent);
+        });
+        // 设置点击跳转电视剧榜单页面
+        binding.tvCardView.setOnClickListener((v) ->{
+            Intent intent = new Intent(requireContext(), RankActivity.class);
+            intent.putExtra("type",2);
+            intent.putExtra("version",0);
+            requireContext().startActivity(intent);
+        });
+
+        // 设置点击跳转综艺榜单页面
+        binding.varietyCardView.setOnClickListener((v) ->{
+            Intent intent = new Intent(requireContext(), RankActivity.class);
+            intent.putExtra("type",3);
+            intent.putExtra("version",0);
             requireContext().startActivity(intent);
         });
         return binding.getRoot();

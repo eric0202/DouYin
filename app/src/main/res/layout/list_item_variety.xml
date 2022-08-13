@@ -16,10 +16,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:animateLayoutChanges="true">
+        android:padding="10dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_poster"
@@ -32,74 +32,55 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{movie.name, default = `片名`}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{`英文名:` + movie.nameEn,default = `英文名`}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/textO_on_white_body"
+                android:visibility="@{movie.nameEn.length() > 0 ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <TextView
                 android:id="@+id/text_directors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@{`导演:` + StringUtil.arrayToString(movie.directors),default = `导演`}"
-                android:textColor="@color/textO_on_white_body"
-                android:singleLine="true"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                android:singleLine="true"
+                android:text="@{`导演:` + StringUtil.arrayToString(movie.directors),default = `导演`}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/textO_on_white_body" />
+
 
             <TextView
-                android:id="@+id/text_tags"
-                android:layout_width="wrap_content"
+                android:id="@+id/text_release_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@{StringUtil.arrayToString(movie.tags),default = `剧情`}"
+                android:text="@{movie.releaseDate + `播出`,default = `播出时间`}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="@color/textO_on_white_body"
-                android:visibility="@{movie.tags.length > 0 ? View.VISIBLE : View.INVISIBLE}" />
-
-
+                android:textColor="@color/textO_on_white_body" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/text_release_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@{movie.releaseDate + `上映`,default = `上映时间`}"
-                    android:textColor="@color/textO_on_white_body"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{`地区:` + StringUtil.arrayToString(movie.areas),default = `上映地区`}"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    android:layout_weight="1"
-                    android:textColor="@color/textO_on_white_body"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:visibility="@{movie.areas.length > 0 ? View.VISIBLE : View.INVISIBLE}" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="5dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -116,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@{StringUtil.numNarrow(movie.hot) + `(主题)`,default = `0`}"
-                    android:textColor="@color/textO_on_white_body"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="@color/textO_on_white_body"
                     app:drawableLeftCompat="@drawable/ic_hot"
                     app:drawableTint="@color/textO_on_white_body" />
 
@@ -126,9 +107,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="5dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -145,8 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@{StringUtil.numNarrow(movie.topicHot) + `(影响)`,default = `0`}"
-                    android:textColor="@color/textO_on_white_body"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="@color/textO_on_white_body"
                     app:drawableLeftCompat="@drawable/ic_hot"
                     app:drawableTint="@color/textO_on_white_body" />
 

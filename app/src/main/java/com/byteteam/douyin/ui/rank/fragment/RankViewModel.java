@@ -14,16 +14,16 @@ import io.reactivex.Maybe;
  * @author： 林锦焜
  * @time： 2022/8/7 18:10
  */
-public class MovieViewModel extends ViewModel {
+public class RankViewModel extends ViewModel {
 
     private final RankItemRepository rankItemRepository;
 
-    public MovieViewModel(RankItemRepository rankItemRepository) {
+    public RankViewModel(RankItemRepository rankItemRepository) {
         this.rankItemRepository = rankItemRepository;
     }
 
-    public Maybe<List<RankItem>> getRankList(int version) {
-        return rankItemRepository.queryMovie(1,version);
+    public Maybe<List<RankItem>> getRankList(int type,int version) {
+        return rankItemRepository.queryMovie(type,version);
     }
 
 }

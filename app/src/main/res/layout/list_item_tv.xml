@@ -45,6 +45,17 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{`英文名:` + movie.nameEn,default = `英文名`}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/textO_on_white_body"
+                android:visibility="@{movie.nameEn.length() > 0 ? View.VISIBLE : View.GONE}"/>
+
+            <TextView
                 android:id="@+id/text_directors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
