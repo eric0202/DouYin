@@ -107,4 +107,9 @@ dependencies {
     // optional - RxJava2 support
     implementation "androidx.paging:paging-rxjava2:$paging_version"
 
+
+    implementation 'jp.wasabeef:blurry:4.0.1'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+
 }

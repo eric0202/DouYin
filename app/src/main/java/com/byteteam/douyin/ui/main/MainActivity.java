@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.byteteam.douyin.databinding.ActivityMainBinding;
 import com.byteteam.douyin.ui.main.adapter.MainLayoutAdapter;
 import com.byteteam.douyin.ui.main.fragment.HomeFragment;
+import com.byteteam.douyin.ui.main.fragment.MineFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setSupportActionBar(binding.toolbar);
     }
 
     @Override
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         if (adapter == null) {
             List<Fragment> list = new ArrayList<>();
             list.add(HomeFragment.newInstance());
+            list.add(MineFragment.newInstance());
             adapter = new MainLayoutAdapter(list, getSupportFragmentManager(), getLifecycle());
             binding.viewPager2.setAdapter(adapter);
         }

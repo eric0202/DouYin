@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
 
+    <color name="light_gray">#CDEEEEEE</color>
     <color name="textO_on_white_title">#ff444444</color>
     <color name="textO_on_white_body">#ff757575</color>
 </resources>
