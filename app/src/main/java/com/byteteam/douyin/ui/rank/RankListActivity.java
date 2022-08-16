@@ -19,7 +19,7 @@ import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
 import com.byteteam.douyin.logic.network.exception.NetException;
 import com.byteteam.douyin.ui.BaseActivity;
 import com.byteteam.douyin.ui.ViewModelFactory;
-import com.byteteam.douyin.ui.rank.adapter.ExtendAdapter;
+import com.byteteam.douyin.ui.custom.adapter.ExtendAdapter;
 import com.byteteam.douyin.ui.rank.adapter.RankListAdapter;
 
 import java.util.List;
