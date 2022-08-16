@@ -6,6 +6,7 @@ import com.byteteam.douyin.logic.database.MyDB;
 import com.byteteam.douyin.logic.database.dao.AccessTokenDao;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
 import com.byteteam.douyin.logic.database.dao.RankItemDao;
+import com.byteteam.douyin.logic.database.dao.RankListDao;
 
 /**
  * @introduction： Dao工厂类
@@ -28,6 +29,10 @@ public class DaoFactory {
 
     public static RankItemDao providerRankItemDao(Context context) {
         return providerAppDatabase(context).rankItemDao();
+    }
+
+    public static RankListDao providerRankListDao(Context context) {
+        return providerAppDatabase(context).rankListDao();
     }
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="15dp"
+    android:background="?selectableItemBackground">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看历史榜单"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="5dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+        app:tint="@color/textO_on_white_title"/>
+
+</LinearLayout>

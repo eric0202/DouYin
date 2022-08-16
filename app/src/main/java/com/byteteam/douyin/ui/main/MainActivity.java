@@ -6,21 +6,11 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.byteteam.douyin.databinding.ActivityMainBinding;
-import com.byteteam.douyin.douyinapi.ApiUtil;
-import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
-import com.byteteam.douyin.logic.factory.NetWorkFactory;
-import com.byteteam.douyin.logic.factory.RepositoryFactory;
-import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
-import com.byteteam.douyin.logic.network.exception.NetException;
-import com.byteteam.douyin.logic.network.response.ResponseTransformer;
 import com.byteteam.douyin.ui.main.adapter.MainLayoutAdapter;
-import com.byteteam.douyin.ui.main.fragment.RankFragment;
+import com.byteteam.douyin.ui.main.fragment.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.functions.Consumer;
-import retrofit2.Retrofit;
 
 
 /**
@@ -47,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if (adapter == null) {
             List<Fragment> list = new ArrayList<>();
-            list.add(RankFragment.newInstance());
+            list.add(HomeFragment.newInstance());
             adapter = new MainLayoutAdapter(list, getSupportFragmentManager(), getLifecycle());
             binding.viewPager2.setAdapter(adapter);
         }

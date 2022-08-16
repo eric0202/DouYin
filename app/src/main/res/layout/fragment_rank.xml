@@ -1,85 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.main.fragment.RankFragment">
+    tools:context=".ui.rank.fragment.RankFragment">
 
-    <LinearLayout
+    <com.byteteam.douyin.widget.MySwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <!-- 抖音电影榜 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/film_card_view"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@mipmap/ic_film"/>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 抖音电视榜 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/tv_card_view"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@mipmap/ic_tv"/>
-
-            </com.google.android.material.card.MaterialCardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
+    </com.byteteam.douyin.widget.MySwipeRefreshLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/msg_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="错误"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_margin="15dp"/>
 
-            <!-- 抖音综艺榜 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/variety_card_view"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@mipmap/ic_variety"/>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>

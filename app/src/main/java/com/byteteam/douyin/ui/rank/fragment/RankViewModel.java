@@ -2,6 +2,7 @@ package com.byteteam.douyin.ui.rank.fragment;
 
 import androidx.lifecycle.ViewModel;
 
+import com.byteteam.douyin.logic.dataSource.RankItemDataSource;
 import com.byteteam.douyin.logic.database.model.RankItem;
 import com.byteteam.douyin.logic.repository.RankItemRepository;
 
@@ -16,14 +17,15 @@ import io.reactivex.Maybe;
  */
 public class RankViewModel extends ViewModel {
 
-    private final RankItemRepository rankItemRepository;
+    private final RankItemDataSource rankItemDataSource;
 
-    public RankViewModel(RankItemRepository rankItemRepository) {
-        this.rankItemRepository = rankItemRepository;
+    public RankViewModel(RankItemDataSource rankItemDataSource) {
+        this.rankItemDataSource = rankItemDataSource;
     }
 
+    // 获取榜单数据列表Maybe对象
     public Maybe<List<RankItem>> getRankList(int type,int version) {
-        return rankItemRepository.queryMovie(type,version);
+        return rankItemDataSource.queryMovie(type,version);
     }
 
 }

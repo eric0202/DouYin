@@ -41,7 +41,6 @@ public class ResponseTransformer<T extends DouYinBaseData> implements Observable
                 })
                 .flatMap((Function<DouYinResponse<T>, ObservableSource<T>>) tDouYinResponse -> {
                     T data = tDouYinResponse.getData();
-                    System.out.println("data:" + data);
                     // 请求成功
                     if (data != null && data.getErrorCode() == 0) {
                         return Observable.just(data);
@@ -49,6 +48,7 @@ public class ResponseTransformer<T extends DouYinBaseData> implements Observable
                     if (data == null) {
                         return Observable.error(new NetException("请求失败"));
                     }
+                    System.out.println("error:" + data.getDescription());
                     return Observable.error(new NetException(data.getDescription()));
                 })
                 .subscribeOn(Schedulers.io())

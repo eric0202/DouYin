@@ -7,7 +7,7 @@ import com.byteteam.douyin.util.StringUtil;
 import java.util.Date;
 
 /**
- * @introduction： Room数据转换器
+ * @introduction： Room数据转换器 String数组与String相互转换
  * @author： 林锦焜
  * @time： 2022/7/28 20:59
  */

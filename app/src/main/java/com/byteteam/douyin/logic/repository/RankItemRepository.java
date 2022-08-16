@@ -7,7 +7,6 @@ import com.byteteam.douyin.logic.database.dao.RankItemDao;
 import com.byteteam.douyin.logic.database.model.ClientToken;
 import com.byteteam.douyin.logic.database.model.RankItem;
 import com.byteteam.douyin.logic.factory.NetWorkFactory;
-import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
 import com.byteteam.douyin.logic.network.model.RankData;
 import com.byteteam.douyin.logic.network.response.DouYinResponse;
 import com.byteteam.douyin.logic.network.response.ResponseTransformer;
@@ -52,8 +51,8 @@ public class RankItemRepository implements RankItemDataSource {
                     RankService rankService = retrofit.create(RankService.class);
                     // 根据是否需要版本号选择请求方式
                     Observable<DouYinResponse<RankData<RankItem>>> observable
-                            = type == 0 ? rankService.getMovieRank(clientToken.getAccessToken(), type) // 获取最新
-                            : rankService.getMovieRank(clientToken.getAccessToken(), type, version); // 根据版本号获取
+                            = version == 0 ? rankService.getRank(clientToken.getAccessToken(), type) // 获取最新
+                            : rankService.getRank(clientToken.getAccessToken(), type, version); // 根据版本号获取
                     return observable
                             .compose(ResponseTransformer.obtain())
                             .map(rankItemRankData -> {
@@ -64,6 +63,10 @@ public class RankItemRepository implements RankItemDataSource {
                                         .subscribe(new Action() {
                                             @Override
                                             public void run() {
+                                                // 给榜单设置版本号
+                                                for (RankItem rankItem : rankItemRankData.getList()) {
+                                                    rankItem.setVersion(version);
+                                                }
                                                 rankItemDao.insert(rankItemRankData.getList())
                                                         .subscribeOn(Schedulers.io())
                                                         .subscribe();
@@ -75,7 +78,7 @@ public class RankItemRepository implements RankItemDataSource {
                 })
                 .onErrorResumeNext((Function<Throwable, MaybeSource<List<RankItem>>>) throwable -> {
                     // 如果请求出现异常(联网失败等情况)
-                    return rankItemDao.queryMovie(type, version)
+                    return rankItemDao.queryRank(type, version)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .defaultIfEmpty(new ArrayList<>())
