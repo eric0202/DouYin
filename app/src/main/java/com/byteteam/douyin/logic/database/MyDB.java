@@ -12,17 +12,19 @@ import com.byteteam.douyin.logic.database.dao.AccessTokenDao;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
 import com.byteteam.douyin.logic.database.dao.RankItemDao;
 import com.byteteam.douyin.logic.database.dao.RankListDao;
+import com.byteteam.douyin.logic.database.dao.UserDao;
 import com.byteteam.douyin.logic.database.model.AccessToken;
 import com.byteteam.douyin.logic.database.model.ClientToken;
 import com.byteteam.douyin.logic.database.model.RankItem;
 import com.byteteam.douyin.logic.database.model.RankList;
+import com.byteteam.douyin.logic.database.model.User;
 
 /**
  * @introduction： 数据库类
  * @author： 林锦焜
  * @time： 2022/8/7 18:10
  */
-@Database(entities = {AccessToken.class, ClientToken.class, RankItem.class, RankList.class}, version = 3)
+@Database(entities = {AccessToken.class, ClientToken.class, RankItem.class, RankList.class, User.class}, version = 3)
 @TypeConverters({StringArrayConverters.class})
 public abstract class MyDB extends RoomDatabase {
 
@@ -33,6 +35,9 @@ public abstract class MyDB extends RoomDatabase {
     public abstract RankItemDao rankItemDao();
 
     public abstract RankListDao rankListDao();
+
+    public abstract UserDao userDao();
+
 
     private static volatile MyDB INSTANCE;
 
@@ -49,4 +54,5 @@ public abstract class MyDB extends RoomDatabase {
         }
         return INSTANCE;
     }
+
 }

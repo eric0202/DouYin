@@ -21,10 +21,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.byteteam.douyin.R;
 import com.byteteam.douyin.databinding.FragmentMineBinding;
+import com.byteteam.douyin.douyinapi.ApiUtil;
+import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
+import com.byteteam.douyin.logic.dataSource.UserDataSource;
 import com.byteteam.douyin.logic.database.model.User;
+import com.byteteam.douyin.logic.factory.RepositoryFactory;
 import com.byteteam.douyin.ui.main.adapter.SectionsPagerAdapter;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
@@ -36,6 +42,14 @@ import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
  */
 public class MineFragment extends Fragment {
 
+    public MineFragment(AccessTokenDataSource accessTokenDataSource, UserDataSource userDataSource) {
+        this.accessTokenDataSource = accessTokenDataSource;
+        this.userDataSource = userDataSource;
+    }
+
+    public MineFragment() {
+    }
+
     public static MineFragment newInstance() {
         return new MineFragment();
     }
@@ -45,6 +59,9 @@ public class MineFragment extends Fragment {
     private boolean singleLine = true;
 
     private View.OnClickListener noFunctionListener;
+
+    private AccessTokenDataSource accessTokenDataSource;
+    private UserDataSource userDataSource;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -73,6 +90,31 @@ public class MineFragment extends Fragment {
                 TextView tv = binding.tvInfo;
                 singleLine = !singleLine;
                 tv.setSingleLine(singleLine);
+            }
+        });
+
+        binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AccessTokenDataSource accessTokenDataSource = RepositoryFactory.providerAccessTokenRepository(getContext());
+                accessTokenDataSource.getAccessToken()
+                        .doOnComplete(() -> { // 获取失败()
+                            ApiUtil.sendAuth(getActivity());
+                        })
+                        .subscribe(accessToken -> {
+                            System.out.println(accessToken.getOpenId());
+
+                            UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
+                            userDataSource.getUser()
+                                    .doOnComplete(()->{
+                                        System.out.println("get user failed");
+                                    })
+                                    .subscribe(user -> {
+                                        System.out.println("user: "+ user);
+                                    });
+
+                        });
             }
         });
 
@@ -135,7 +177,7 @@ public class MineFragment extends Fragment {
     }
 
     public void showNoFunction(){
-        Toast.makeText(requireContext(),"FUNCTION IS UNDER DEVELOPMENT, COMING SOON...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(),"功能正在开发,即将上线...", Toast.LENGTH_SHORT).show();
     }
 
 }
