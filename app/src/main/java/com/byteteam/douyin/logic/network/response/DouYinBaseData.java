@@ -1,5 +1,7 @@
 package com.byteteam.douyin.logic.network.response;
 
+import androidx.room.Ignore;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -11,9 +13,11 @@ public abstract class DouYinBaseData {
 
     // 错误码
     @SerializedName("error_code")
+    @Ignore
     protected Long errorCode;
 
     // 错误码描述
+    @Ignore
     protected String description;
 
     public Long getErrorCode() {

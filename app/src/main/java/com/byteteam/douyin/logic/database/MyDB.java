@@ -24,7 +24,7 @@ import com.byteteam.douyin.logic.database.model.User;
  * @author： 林锦焜
  * @time： 2022/8/7 18:10
  */
-@Database(entities = {AccessToken.class, ClientToken.class, RankItem.class, RankList.class, User.class}, version = 3)
+@Database(entities = {AccessToken.class, ClientToken.class, RankItem.class, RankList.class, User.class}, version = 5)
 @TypeConverters({StringArrayConverters.class})
 public abstract class MyDB extends RoomDatabase {
 

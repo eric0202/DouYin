@@ -12,7 +12,7 @@ public class User extends DouYinBaseData {
 
     @NonNull
     @PrimaryKey
-    private String open_id;
+    private String open_id = "";
 
     @ColumnInfo
     private String avatar;
@@ -68,6 +68,7 @@ public class User extends DouYinBaseData {
         this.open_id = uid;
     }
 
+    @NonNull
     public String getOpen_id() {
         return open_id;
     }

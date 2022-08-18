@@ -26,6 +26,8 @@ import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.dataSource.UserDataSource;
 import com.byteteam.douyin.logic.database.model.User;
 import com.byteteam.douyin.logic.factory.RepositoryFactory;
+import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
+import com.byteteam.douyin.logic.network.exception.NetException;
 import com.byteteam.douyin.ui.main.adapter.SectionsPagerAdapter;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -107,11 +109,13 @@ public class MineFragment extends Fragment {
 
                             UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
                             userDataSource.getUser()
-                                    .doOnComplete(()->{
-                                        System.out.println("get user failed");
-                                    })
                                     .subscribe(user -> {
-                                        System.out.println("user: "+ user);
+                                        System.out.println("user: " + user);
+                                    }, new ErrorConsumer() {
+                                        @Override
+                                        protected void error(NetException e) {
+                                            System.out.println("error: " + e.getMsg());
+                                        }
                                     });
 
                         });
