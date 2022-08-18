@@ -2,6 +2,7 @@ package com.byteteam.douyin.ui.main.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +25,7 @@ import com.byteteam.douyin.databinding.FragmentMineBinding;
 import com.byteteam.douyin.douyinapi.ApiUtil;
 import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.dataSource.UserDataSource;
+import com.byteteam.douyin.logic.database.model.AccessToken;
 import com.byteteam.douyin.logic.database.model.User;
 import com.byteteam.douyin.logic.factory.RepositoryFactory;
 import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
@@ -34,6 +36,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import io.reactivex.Maybe;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
 
@@ -44,10 +47,6 @@ import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
  */
 public class MineFragment extends Fragment {
 
-    public MineFragment(AccessTokenDataSource accessTokenDataSource, UserDataSource userDataSource) {
-        this.accessTokenDataSource = accessTokenDataSource;
-        this.userDataSource = userDataSource;
-    }
 
     public MineFragment() {
     }
@@ -62,8 +61,6 @@ public class MineFragment extends Fragment {
 
     private View.OnClickListener noFunctionListener;
 
-    private AccessTokenDataSource accessTokenDataSource;
-    private UserDataSource userDataSource;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -98,35 +95,25 @@ public class MineFragment extends Fragment {
         binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                AccessTokenDataSource accessTokenDataSource = RepositoryFactory.providerAccessTokenRepository(getContext());
-                accessTokenDataSource.getAccessToken()
-                        .doOnComplete(() -> { // 获取失败()
+                UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
+                userDataSource.queryUser()
+                        .doOnComplete(()->{
                             ApiUtil.sendAuth(getActivity());
+                            Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
                         })
-                        .subscribe(accessToken -> {
-                            System.out.println(accessToken.getOpenId());
-
-                            UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
-                            userDataSource.getUser()
-                                    .subscribe(user -> {
-                                        System.out.println("user: " + user);
-                                    }, new ErrorConsumer() {
-                                        @Override
-                                        protected void error(NetException e) {
-                                            System.out.println("error: " + e.getMsg());
-                                        }
-                                    });
-
+                        .subscribe(user -> {
+                            System.out.println("user: " + user);
+                            Log.e("User",user.toString());
                         });
-            }
+                };
+
         });
 
         bindNoFunction();
 
         setAvatar();
 
-        displayUser(new User().getExampleUser());
+//        displayUser(new User().getExampleUser());
         return binding.getRoot();
     }
 

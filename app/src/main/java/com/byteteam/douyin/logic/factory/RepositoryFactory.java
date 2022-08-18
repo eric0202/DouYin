@@ -40,7 +40,8 @@ public class RepositoryFactory {
     }
 
     public static UserDataSource provideUserDataRepository(Context context){
-        return new UserRepository(DaoFactory.provideUserDao(context));
+        return new UserRepository(providerAccessTokenRepository(context)
+                , DaoFactory.provideUserDao(context));
     }
 
 }

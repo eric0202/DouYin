@@ -8,9 +8,5 @@ import io.reactivex.Observable;
 
 public interface UserDataSource {
 
-    Maybe<User> getUser();
-
-    Completable insert(User user);
-
-    Observable<User> requestUser(String accessToken, String open_id);
+    Maybe<User> queryUser();
 }
