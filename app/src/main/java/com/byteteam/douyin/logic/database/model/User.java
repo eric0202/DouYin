@@ -130,7 +130,12 @@ public class User extends DouYinBaseData {
     public String toString() {
         return "Logged in user: {" +
                 "uid: " + open_id +
-                ", \tnickname: " + nickname + "}";
+                ", \tnickname= " + nickname +
+                ", \tavatar= " + avatar +
+                ", \tcity= " + city +
+                ", \tcountry= "+ country+
+                ", \tgender= "+ gender+
+                ", \tintroduction= "+introduction+ "}";
     }
 
     public User getExampleUser(){

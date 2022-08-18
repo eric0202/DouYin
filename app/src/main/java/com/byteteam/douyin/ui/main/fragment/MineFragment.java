@@ -1,6 +1,7 @@
 package com.byteteam.douyin.ui.main.fragment;
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import io.reactivex.Maybe;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
+import retrofit2.http.Url;
 
 /**
  * @introduction： 个人主页Fragment
@@ -103,7 +105,7 @@ public class MineFragment extends Fragment {
                         })
                         .subscribe(user -> {
                             System.out.println("user: " + user);
-                            Log.e("User",user.toString());
+                            displayUser(user);
                         });
                 };
 
@@ -133,10 +135,11 @@ public class MineFragment extends Fragment {
         binding.tvValueGender.setText(user.getGender());
         binding.tvInfo.setText(user.getIntroduction());
 
+        RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
         if (user.getAvatar() == null) {
-            RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
             Glide.with(this).load(user.getAvatar()).apply(options).into(binding.imgAvatar);
-
+        }else{
+            Glide.with(this).load(user.getAvatar()).apply(options).into(binding.imgAvatar);
         }
 
     }

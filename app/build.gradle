@@ -7,7 +7,7 @@ android {
 
     signingConfigs {//签名
         appkey {
-            storeFile file('/home/eric/AndroidStudioProjects/byte_douyin.jks')
+            storeFile file('C:\\Users\\E\\Desktop\\青训营\\byte_douyin.jks')
             storePassword "bytedouyin"
             keyAlias "bytedouyin"
             keyPassword "bytedouyin"
