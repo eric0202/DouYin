@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "038bf37d9f96f3c3a448261c509a6c51",
+    "identityHash": "b3b8295e0f9daf08b8072cf8ab903502",
     "entities": [
       {
         "tableName": "AccessToken",
@@ -239,12 +239,98 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`open_id` TEXT NOT NULL, `avatar` TEXT, `city` TEXT, `country` TEXT, `nickname` TEXT, `gender` TEXT, `introduction` TEXT, `subs` INTEGER NOT NULL, `likes` INTEGER NOT NULL, `fans` INTEGER NOT NULL, `errorCode` INTEGER, `description` TEXT, PRIMARY KEY(`open_id`))",
+        "fields": [
+          {
+            "fieldPath": "open_id",
+            "columnName": "open_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avatar",
+            "columnName": "avatar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nickname",
+            "columnName": "nickname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "introduction",
+            "columnName": "introduction",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subs",
+            "columnName": "subs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "likes",
+            "columnName": "likes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fans",
+            "columnName": "fans",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "errorCode",
+            "columnName": "errorCode",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "open_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '038bf37d9f96f3c3a448261c509a6c51')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b3b8295e0f9daf08b8072cf8ab903502')"
     ]
   }
 }

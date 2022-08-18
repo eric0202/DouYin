@@ -5,11 +5,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
-public class User {
+import com.byteteam.douyin.logic.network.response.DouYinBaseData;
 
+@Entity
+public class User extends DouYinBaseData {
+
+    @NonNull
     @PrimaryKey
-    private int uid;
+    private String open_id;
 
     @ColumnInfo
     private String avatar;
@@ -36,6 +39,7 @@ public class User {
 
     }
 
+
     public int getSubs() {
         return subs;
     }
@@ -60,16 +64,16 @@ public class User {
         this.fans = fans;
     }
 
-    public User(int uid) {
-        this.uid = uid;
+    public User(String uid) {
+        this.open_id = uid;
     }
 
-    public int getUid() {
-        return uid;
+    public String getOpen_id() {
+        return open_id;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setOpen_id(String uid) {
+        this.open_id = uid;
     }
 
     public String getAvatar() {
@@ -124,12 +128,12 @@ public class User {
     @Override
     public String toString() {
         return "Logged in user: {" +
-                "uid: " +uid +
+                "uid: " + open_id +
                 ", \tnickname: " + nickname + "}";
     }
 
     public User getExampleUser(){
-        this.setUid(12234);
+        this.setOpen_id("12234");
         this.setAvatar("link for avatar");
         this.setCity("chongqing");
         this.setCountry("china");
