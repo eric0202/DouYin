@@ -75,16 +75,10 @@ public class MineFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.e("F:", "onstart");
         initUser();
+        doSubscribe();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("F:", "onresume");
-        initUser();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -108,12 +102,12 @@ public class MineFragment extends Fragment {
                 userDataSource.queryUser()
                         .doOnComplete(()->{
                             ApiUtil.sendAuth(getActivity());
-                            Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
                         })
                         .subscribe(user -> {
                             System.out.println("user: " + user);
                             displayUser(user);
                         });
+
 
             }
         };
@@ -180,11 +174,31 @@ public class MineFragment extends Fragment {
         userDataSource.queryUser()
                 .doOnComplete(()->{
                     ApiUtil.sendAuth(getActivity());
-                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT).show();
                 })
                 .subscribe(user -> {
                     System.out.println("user: " + user);
                     displayUser(user);
+                });
+    };
+
+    @SuppressLint("CheckResult")
+    private void doSubscribe(){
+        UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
+        userDataSource.queryUser()
+                .subscribe(user -> {
+                    System.out.println("user: " + user);
+                    displayUser(user);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    private void doOnComplete(){
+        UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
+        userDataSource.queryUser()
+                .doOnComplete(()->{
+                    ApiUtil.sendAuth(getActivity());
+                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT).show();
                 });
     };
 
