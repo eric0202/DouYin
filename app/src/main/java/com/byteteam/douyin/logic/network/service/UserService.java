@@ -11,6 +11,12 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
+/**
+ * @introduction：
+ * @author： 何文鹏
+ * @time： 2022/8/19
+ */
+
 public interface UserService {
     @POST("/oauth/userinfo/")
     Observable<DouYinResponse<User>> getUser(@Header("access-token")String accessToken,

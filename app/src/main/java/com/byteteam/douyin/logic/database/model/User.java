@@ -8,6 +8,12 @@ import androidx.room.PrimaryKey;
 import com.byteteam.douyin.R;
 import com.byteteam.douyin.logic.network.response.DouYinBaseData;
 
+/**
+ * @introduction： User实体类
+ * @author： 何文鹏
+ * @time： 2022/8/16 21:53
+ */
+
 @Entity
 public class User extends DouYinBaseData {
 

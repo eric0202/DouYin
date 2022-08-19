@@ -12,6 +12,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * @introduction： 本地获取User
+ * @author： 何文鹏
+ * @time： 2022/8/19
+ */
+
 public class LocalUserRepository implements UserDataSource {
     private UserDao userDao;
 

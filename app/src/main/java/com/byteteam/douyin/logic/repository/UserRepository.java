@@ -33,6 +33,12 @@ import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ * @introduction： 联网获取user
+ * @author： 何文鹏
+ * @time： 2022/8/19
+ */
+
 public class UserRepository implements UserDataSource {
 
     UserDao userDao;
