@@ -11,6 +11,7 @@ import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
 import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.repository.AccessTokenRepository;
 import com.byteteam.douyin.logic.repository.ClientTokenRepository;
+import com.byteteam.douyin.logic.repository.LocalUserRepository;
 import com.byteteam.douyin.logic.repository.RankItemRepository;
 import com.byteteam.douyin.logic.repository.RankListRepository;
 import com.byteteam.douyin.logic.repository.UserRepository;
@@ -48,6 +49,10 @@ public class RepositoryFactory {
 
     public static WorksDataSource provideWorksRepository(Context context){
         return new WorksRepository(DaoFactory.provideWorksDao(context));
+    }
+
+    public static UserDataSource provideLocalUserDataRepository(Context context){
+        return new LocalUserRepository(DaoFactory.provideUserDao(context));
     }
 
 }

@@ -1,6 +1,8 @@
 package com.byteteam.douyin.ui.main.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,11 +36,17 @@ import com.byteteam.douyin.ui.main.adapter.SectionsPagerAdapter;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.Maybe;
+import io.reactivex.MaybeSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
+import retrofit2.http.Url;
 
 /**
  * @introduction： 个人主页Fragment
@@ -61,6 +69,8 @@ public class MineFragment extends Fragment {
 
     private View.OnClickListener noFunctionListener;
 
+    private View.OnClickListener getUserListener;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -75,6 +85,26 @@ public class MineFragment extends Fragment {
                 showNoFunction();
             }
         };
+
+        getUserListener = new View.OnClickListener() {
+            @SuppressLint("CheckResult")
+            @Override
+            public void onClick(View view) {
+                UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
+                userDataSource.queryUser()
+                        .doOnComplete(()->{
+                            ApiUtil.sendAuth(getActivity());
+                            Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
+                        })
+                        .subscribe(user -> {
+                            System.out.println("user: " + user);
+                            displayUser(user);
+                        });
+
+            }
+        };
+
+
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(requireContext(), requireActivity().getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
@@ -92,29 +122,32 @@ public class MineFragment extends Fragment {
             }
         });
 
-        binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
-                userDataSource.queryUser()
-                        .doOnComplete(()->{
-                            ApiUtil.sendAuth(getActivity());
-                            Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
-                        })
-                        .subscribe(user -> {
-                            System.out.println("user: " + user);
-                            Log.e("User",user.toString());
-                        });
-                };
+        // 设置背景图片
+        setBg();
 
-        });
+        // 打开页面先尝试从数据库加载user
+        initUser();
+
+        binding.imgAvatar.setOnClickListener(getUserListener);
 
         bindNoFunction();
 
-        setAvatar();
-
 //        displayUser(new User().getExampleUser());
         return binding.getRoot();
+    }
+
+    // 点开页面的时候加载user
+    @SuppressLint("CheckResult")
+    private void initUser() {
+        UserDataSource userDataSource = RepositoryFactory.provideLocalUserDataRepository(getContext());
+        userDataSource.queryUser()
+                .doOnComplete(()->{
+                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
+                })
+                .subscribe(user -> {
+                    System.out.println("user: " + user);
+                    displayUser(user);
+                });
     }
 
     private void bindNoFunction() {
@@ -125,19 +158,76 @@ public class MineFragment extends Fragment {
         binding.llRates.setOnClickListener(noFunctionListener);
     }
 
+    @SuppressLint("CheckResult")
+    private void refreshUser(){
+        UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
+        userDataSource.queryUser()
+                .doOnComplete(()->{
+                    ApiUtil.sendAuth(getActivity());
+                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT);
+                })
+                .subscribe(user -> {
+                    System.out.println("user: " + user);
+                    displayUser(user);
+                });
+    };
 
+
+    // ui中展示user信息
     private void displayUser(User user) {
-        binding.tvValueNickname.setText(user.getNickname());
-        binding.tvValueCity.setText(user.getCity());
-        binding.tvValueCountry.setText(user.getCountry());
-        binding.tvValueGender.setText(user.getGender());
-        binding.tvInfo.setText(user.getIntroduction());
 
-        if (user.getAvatar() == null) {
-            RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
-            Glide.with(this).load(user.getAvatar()).apply(options).into(binding.imgAvatar);
+        RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
 
+
+        // 判断user是否为空
+        if (user.getOpen_id().equals("")){
+            binding.tvValueNickname.setText(R.string.tap2login);
+            Glide.with(this).load(R.drawable.r_key).apply(options).into(binding.imgAvatar);
+        }else{
+            if (!Objects.equals(user.getCity(), "")) {
+                binding.tvValueCity.setText(user.getCity());
+            }
+
+            if (!Objects.equals(user.getCountry(), "")){
+                binding.tvValueCountry.setText(user.getCountry());
+            }
+
+            if (!Objects.equals(user.getNickname(), "")){
+                binding.tvValueNickname.setText(user.getNickname());
+            }
+
+//            if (!Objects.equals(user.getIntroduction(), "")){
+//                binding.tvInfo.setText(user.getIntroduction());
+//            }
+
+
+            if (Objects.equals(user.getAvatar(), "")) {
+                Glide.with(this).load(R.drawable.r_key).apply(options).into(binding.imgAvatar);
+            }else{
+                Glide.with(this).load(user.getAvatar()).apply(options).into(binding.imgAvatar);
+            }
+
+//            switch (user.getGender()){
+//                case "0":
+//                    binding.tvValueGender.setText(R.string.unknown_gender);
+//                case "1":
+//                    binding.tvValueGender.setText(R.string.gender_female);
+//                case "2":
+//                    binding.tvValueGender.setText(R.string.gender_male);
+//                default:
+//            }
+
+
+            // 性别判断
+            if (Objects.equals(user.getGender(), "0")){
+                binding.tvValueGender.setText(R.string.unknown_gender);
+            } else if (Objects.equals(user.getGender(), "1")){
+                binding.tvValueGender.setText(R.string.gender_male);
+            }else if(Objects.equals(user.getGender(), "2")){
+                binding.tvValueGender.setText(R.string.gender_female);
+            }
         }
+
 
     }
 
@@ -160,9 +250,7 @@ public class MineFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setAvatar(){
-        RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
-        Glide.with(this).load(R.drawable.wall).apply(options).into(binding.imgAvatar);
+    public void setBg(){
         RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
         Glide.with(this).load(R.drawable.wall).apply(options1).into(binding.imgWall);
     }

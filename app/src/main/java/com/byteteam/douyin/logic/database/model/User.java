@@ -5,7 +5,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.byteteam.douyin.R;
 import com.byteteam.douyin.logic.network.response.DouYinBaseData;
+
+/**
+ * @introduction： User实体类
+ * @author： 何文鹏
+ * @time： 2022/8/16 21:53
+ */
 
 @Entity
 public class User extends DouYinBaseData {
@@ -130,17 +137,17 @@ public class User extends DouYinBaseData {
     public String toString() {
         return "Logged in user: {" +
                 "uid: " + open_id +
-                ", \tnickname: " + nickname + "}";
+                ", \tnickname= " + nickname +
+                ", \tavatar= " + avatar +
+                ", \tcity= " + city +
+                ", \tcountry= "+ country+
+                ", \tgender= "+ gender+
+                ", \tintroduction= "+introduction+ "}";
     }
 
-    public User getExampleUser(){
-        this.setOpen_id("12234");
-        this.setAvatar("link for avatar");
-        this.setCity("chongqing");
-        this.setCountry("china");
-        this.setNickname("panda panda");
-        this.setGender("male");
-        this.setIntroduction("hello , I am panda panda");
+
+    public User getEmptyUser(){
+        this.setNickname("点击登录");
         return this;
     }
 }

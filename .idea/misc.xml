@@ -37,6 +37,10 @@
         <entry key="..\:/CodeStudy/Android/bytedance/douyin/app/src/main/res/layout/list_item_works.xml" value="0.17135416666666667" />
         <entry key="..\:/CodeStudy/Android/bytedance/douyin/app/src/main/res/menu/menu_activity_main.xml" value="0.17135416666666667" />
         <entry key="..\:/CodeStudy/Android/bytedance/douyin/app/src/main/res/menu/menu_scrolling.xml" value="0.2421875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_mine.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/menu_scrolling.xml" value="0.35572916666666665" />
       </map>
     </option>
   </component>

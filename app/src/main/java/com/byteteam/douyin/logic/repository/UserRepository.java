@@ -1,5 +1,8 @@
 package com.byteteam.douyin.logic.repository;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.dataSource.UserDataSource;
 import com.byteteam.douyin.logic.database.dao.UserDao;
@@ -11,7 +14,12 @@ import com.byteteam.douyin.logic.network.response.ResponseTransformer;
 import com.byteteam.douyin.logic.network.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import io.reactivex.functions.Function;
 
 import io.reactivex.Completable;
@@ -24,6 +32,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+
+/**
+ * @introduction： 联网获取user
+ * @author： 何文鹏
+ * @time： 2022/8/19
+ */
 
 public class UserRepository implements UserDataSource {
 
@@ -42,7 +56,10 @@ public class UserRepository implements UserDataSource {
                     Retrofit retrofit = NetWorkFactory.provideRetrofit();
                     UserService userService = retrofit.create(UserService.class);
 
-                    Observable<DouYinResponse<User>> observable = userService.getUser(accessToken.getAccessToken(),accessToken.getOpenId());
+                    Map map = new HashMap();
+                    map.put("access_token",accessToken.getAccessToken());
+                    map.put("open_id",accessToken.getOpenId());
+                    Observable<DouYinResponse<User>> observable = userService.getUser(accessToken.getAccessToken(),map);
                     return observable
                             .compose(ResponseTransformer.obtain())
                             .map(userData ->{
