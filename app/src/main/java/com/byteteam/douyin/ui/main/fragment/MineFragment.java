@@ -73,6 +73,20 @@ public class MineFragment extends Fragment {
 
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("F:", "onstart");
+        initUser();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("F:", "onresume");
+        initUser();
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentMineBinding.inflate(getLayoutInflater(),container,false);
@@ -103,6 +117,8 @@ public class MineFragment extends Fragment {
 
             }
         };
+
+
 
 
 
