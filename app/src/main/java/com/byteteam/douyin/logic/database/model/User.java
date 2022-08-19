@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.byteteam.douyin.R;
 import com.byteteam.douyin.logic.network.response.DouYinBaseData;
 
 @Entity
@@ -138,14 +139,9 @@ public class User extends DouYinBaseData {
                 ", \tintroduction= "+introduction+ "}";
     }
 
-    public User getExampleUser(){
-        this.setOpen_id("12234");
-        this.setAvatar("link for avatar");
-        this.setCity("chongqing");
-        this.setCountry("china");
-        this.setNickname("panda panda");
-        this.setGender("male");
-        this.setIntroduction("hello , I am panda panda");
+
+    public User getEmptyUser(){
+        this.setNickname("点击登录");
         return this;
     }
 }

@@ -9,7 +9,6 @@ import com.byteteam.douyin.logic.database.dao.UserDao;
 import com.byteteam.douyin.logic.database.model.AccessToken;
 import com.byteteam.douyin.logic.database.model.User;
 import com.byteteam.douyin.logic.factory.NetWorkFactory;
-import com.byteteam.douyin.logic.network.model.UserData;
 import com.byteteam.douyin.logic.network.response.DouYinResponse;
 import com.byteteam.douyin.logic.network.response.ResponseTransformer;
 import com.byteteam.douyin.logic.network.service.UserService;
