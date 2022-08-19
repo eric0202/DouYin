@@ -1,6 +1,7 @@
 package com.byteteam.douyin.ui.main.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,7 +76,6 @@ public class MineFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        initUser();
         doSubscribe();
     }
 
@@ -121,6 +121,7 @@ public class MineFragment extends Fragment {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+
         ImageButton btn_expand = binding.btnExpand;
         btn_expand.setOnClickListener(new View.OnClickListener() {
 
@@ -132,21 +133,20 @@ public class MineFragment extends Fragment {
             }
         });
 
-        // 设置背景图片
-        setBg();
+        // 默认设置背景和头像
+        setDefaultBg();
 
-        // 打开页面先尝试从数据库加载user
         initUser();
 
         binding.imgAvatar.setOnClickListener(getUserListener);
 
         bindNoFunction();
 
-//        displayUser(new User().getExampleUser());
         return binding.getRoot();
+
     }
 
-    // 点开页面的时候加载user
+    // 从数据库加载user
     @SuppressLint("CheckResult")
     private void initUser() {
         UserDataSource userDataSource = RepositoryFactory.provideLocalUserDataRepository(getContext());
@@ -174,7 +174,6 @@ public class MineFragment extends Fragment {
         userDataSource.queryUser()
                 .doOnComplete(()->{
                     ApiUtil.sendAuth(getActivity());
-                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT).show();
                 })
                 .subscribe(user -> {
                     System.out.println("user: " + user);
@@ -198,7 +197,6 @@ public class MineFragment extends Fragment {
         userDataSource.queryUser()
                 .doOnComplete(()->{
                     ApiUtil.sendAuth(getActivity());
-                    Toast.makeText(getContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT).show();
                 });
     };
 
@@ -280,7 +278,9 @@ public class MineFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setBg(){
+    public void setDefaultBg(){
+        RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
+        Glide.with(this).load(R.drawable.r_key).apply(options).into(binding.imgAvatar);
         RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
         Glide.with(this).load(R.drawable.wall).apply(options1).into(binding.imgWall);
     }
