@@ -170,7 +170,7 @@ public class MineFragment extends Fragment {
         // 默认设置背景和头像
         setDefaultBg();
 
-        // 没有这个也可以正常使用,但是这个可以使加载更快,不会看到默认头像
+        // 没有这个也可以正常使用,但是这个可以使加载更快,不然会看到默认头像
         initUser();
 
         binding.imgAvatar.setOnClickListener(getUserListener);
