@@ -117,7 +117,14 @@ public class User extends DouYinBaseData {
     }
 
     public String getGender() {
-        return gender;
+        switch (gender){
+            case "1":
+                return "男";
+            case "2":
+                return "女";
+            default:
+                return "未知性别";
+        }
     }
 
     public void setGender(String gender) {
@@ -145,9 +152,4 @@ public class User extends DouYinBaseData {
                 ", \tintroduction= "+introduction+ "}";
     }
 
-
-    public User getEmptyUser(){
-        this.setNickname("点击登录");
-        return this;
-    }
 }

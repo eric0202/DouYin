@@ -12,7 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.Rotate;
 import com.bumptech.glide.request.RequestOptions;
 import com.byteteam.douyin.R;
 import com.byteteam.douyin.databinding.FragmentMineBinding;
@@ -34,6 +38,7 @@ import com.byteteam.douyin.logic.factory.RepositoryFactory;
 import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
 import com.byteteam.douyin.logic.network.exception.NetException;
 import com.byteteam.douyin.ui.main.adapter.SectionsPagerAdapter;
+import com.byteteam.douyin.util.AnimationUtil;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -68,9 +73,10 @@ public class MineFragment extends Fragment {
 
     private boolean singleLine = true;
 
-    private View.OnClickListener noFunctionListener;
+    private View.OnClickListener noFunctionListener, getUserListener, menuClickListener , disNoFunctionListener;
 
-    private View.OnClickListener getUserListener;
+
+
 
 
     @Override
@@ -87,12 +93,15 @@ public class MineFragment extends Fragment {
         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
         toolBarLayout.setTitle(requireActivity().getTitle());
 
+
         noFunctionListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AnimationUtil.doPressAnimation(view);
                 showNoFunction();
             }
         };
+
 
         getUserListener = new View.OnClickListener() {
             @SuppressLint("CheckResult")
@@ -112,6 +121,21 @@ public class MineFragment extends Fragment {
             }
         };
 
+        menuClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AnimationUtil.doPressAnimation(view);
+                showMenu(binding.btnSettings);
+            }
+        };
+
+        disNoFunctionListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNoFunction();
+            }
+        };
+
 
 
 
@@ -121,6 +145,8 @@ public class MineFragment extends Fragment {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+        ImageButton settingsButton = binding.btnSettings;
+        settingsButton.setOnClickListener(menuClickListener);
 
         ImageButton btn_expand = binding.btnExpand;
         btn_expand.setOnClickListener(new View.OnClickListener() {
@@ -130,8 +156,16 @@ public class MineFragment extends Fragment {
                 TextView tv = binding.tvInfo;
                 singleLine = !singleLine;
                 tv.setSingleLine(singleLine);
+                if (singleLine){
+                    Glide.with(getContext()).load(R.drawable.arrow).into(binding.btnExpand);
+                }else{
+                    Glide.with(getContext()).load(R.drawable.arrow).transform(new Rotate(180)).into(binding.btnExpand);
+                }
             }
         });
+
+        ImageButton btn_edit = binding.btnModify;
+        btn_edit.setOnClickListener(noFunctionListener);
 
         // 默认设置背景和头像
         setDefaultBg();
@@ -162,11 +196,11 @@ public class MineFragment extends Fragment {
     }
 
     private void bindNoFunction() {
-        binding.tvEditProfile.setOnClickListener(noFunctionListener);
-        binding.tvNewFriends.setOnClickListener(noFunctionListener);
+        binding.cvEditProfile.setOnClickListener(noFunctionListener);
+        binding.cvNewFriends.setOnClickListener(noFunctionListener);
         binding.clStore.setOnClickListener(noFunctionListener);
         binding.clOpen.setOnClickListener(noFunctionListener);
-        binding.llRates.setOnClickListener(noFunctionListener);
+        binding.llRates.setOnClickListener(disNoFunctionListener);
     }
 
     @SuppressLint("CheckResult")
@@ -199,7 +233,35 @@ public class MineFragment extends Fragment {
                 .doOnComplete(()->{
                     ApiUtil.sendAuth(getActivity());
                 });
+
     };
+
+    // 展示menu，点击了右上角图标后
+    private void showMenu(View view){
+        PopupMenu popupMenu = new PopupMenu(getContext(),view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_settings_mine,popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+
+                    case R.id.settings:
+                        showNoFunction();
+                    case R.id.logout:
+                        // todo
+                    case R.id.change_bg:
+                        // todo
+
+                }
+
+                return true;
+            }
+        });
+
+        popupMenu.show();
+
+    }
 
 
     // ui中展示user信息
@@ -225,6 +287,8 @@ public class MineFragment extends Fragment {
                 binding.tvValueNickname.setText(user.getNickname());
             }
 
+            binding.tvValueGender.setText(user.getGender());
+
 //            if (!Objects.equals(user.getIntroduction(), "")){
 //                binding.tvInfo.setText(user.getIntroduction());
 //            }
@@ -247,14 +311,6 @@ public class MineFragment extends Fragment {
 //            }
 
 
-            // 性别判断
-            if (Objects.equals(user.getGender(), "0")){
-                binding.tvValueGender.setText(R.string.unknown_gender);
-            } else if (Objects.equals(user.getGender(), "1")){
-                binding.tvValueGender.setText(R.string.gender_male);
-            }else if(Objects.equals(user.getGender(), "2")){
-                binding.tvValueGender.setText(R.string.gender_female);
-            }
         }
 
 
