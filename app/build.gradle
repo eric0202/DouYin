@@ -7,7 +7,7 @@ android {
 
     signingConfigs {//签名
         appkey {
-            storeFile file('S:\\字节跳动青训营\\byte_douyin.jks')
+            storeFile file('C:\\Users\\E\\Desktop\\青训营\\byte_douyin.jks')
             storePassword "bytedouyin"
             keyAlias "bytedouyin"
             keyPassword "bytedouyin"
@@ -68,6 +68,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // lottie
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
 
     // 抖音开发平台SDK
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
