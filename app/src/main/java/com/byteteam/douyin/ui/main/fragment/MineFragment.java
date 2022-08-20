@@ -195,6 +195,7 @@ public class MineFragment extends Fragment {
                 });
     }
 
+
     private void bindNoFunction() {
         binding.cvEditProfile.setOnClickListener(noFunctionListener);
         binding.cvNewFriends.setOnClickListener(noFunctionListener);
