@@ -40,6 +40,18 @@
         <entry key="..\:/CodeStudy/Android/bytedance/douyin/app/src/main/res/layout/list_item_works.xml" value="0.17135416666666667" />
         <entry key="..\:/CodeStudy/Android/bytedance/douyin/app/src/main/res/menu/menu_activity_main.xml" value="0.17135416666666667" />
         <entry key="..\:/CodeStudy/Android/bytedance/douyin/app/src/main/res/menu/menu_scrolling.xml" value="0.2421875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_comment_24.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_hot.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_icon.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_img_load_fail.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_loading.xml" value="0.114" />
+        <entry key="app/src/main/res/layout/fragment_mine.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/menu/menu_activity_main.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/menu/menu_scrolling.xml" value="0.31666666666666665" />
       </map>
     </option>
   </component>
