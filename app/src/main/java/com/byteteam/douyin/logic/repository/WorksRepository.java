@@ -51,7 +51,10 @@ public class WorksRepository implements WorksDataSource {
         return worksService.queryMyWorks(accessToken, openId, cursor, 20)
                 .compose(ResponseTransformer.obtain())
                 .map(worksResponse -> {
-                    if (cursor == 0) {
+                    if (worksResponse.getList() == null) {
+                        worksResponse.setList(new ArrayList<>());
+                    }
+                    if (cursor == 0 && worksResponse.getList().size() > 0) {
                         // 如果map被调用，则说明联网请求成功，将结果异步缓存到数据库
                         // 保存数据到数据库，并清空之前的缓存
                         Disposable disposable = worksDao.delete()

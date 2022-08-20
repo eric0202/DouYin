@@ -37,11 +37,16 @@ public class ImageBindingAdapter {
                     .centerCrop() // 指定图片的缩放类型为centerCrop
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //缓存所有版本的图像
                     .into(imageView);
+        } else if (str.length() == 0) {
+            Glide.with(imageView.getContext())
+                    .load(R.drawable.ic_img_load_fail)
+                    .into(imageView);
         }
     }
 
     @BindingAdapter({"srcCompat"})
     public static void loadSrc(AppCompatImageView imageView, int src) {
+        System.out.println("loadSrc:" + src);
         Glide.with(imageView.getContext()).load(src).into(imageView);
     }
 

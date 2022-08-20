@@ -13,4 +13,8 @@
         android:id="@+id/mine"
         android:title="我"/>
 
+    <item
+        android:id="@+id/blank"
+        android:title="测试"/>
+
 </menu>
