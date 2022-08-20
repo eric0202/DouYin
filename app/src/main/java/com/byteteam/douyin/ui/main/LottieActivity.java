@@ -31,7 +31,7 @@ public class LottieActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-        },2000);
+        },1800);
     }
 
     @Override
