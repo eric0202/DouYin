@@ -5,12 +5,14 @@ import androidx.room.ColumnInfo;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @introduction： 视频作品统计数据实体类
  * @author： 林锦焜
  * @time： 2022/8/18 23:13
  */
-public class WorksStatistics {
+public class WorksStatistics implements Serializable {
 
     // 点赞数
     @ColumnInfo(name = "digg_count")

@@ -9,13 +9,15 @@ import androidx.room.PrimaryKey;
 import com.byteteam.douyin.logic.network.response.DouYinBaseData;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @introduction： 视频作品实体类
  * @author： 林锦焜
  * @time： 2022/8/18 23:05
  */
 @Entity
-public class Works {
+public class Works implements Serializable {
 
     // 视频id
     @NonNull

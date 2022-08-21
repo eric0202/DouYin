@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.byteteam.douyin.logic.factory.RepositoryFactory;
+import com.byteteam.douyin.ui.main.viewmodel.MyFansViewModel;
 import com.byteteam.douyin.ui.main.viewmodel.WorksViewModel;
 import com.byteteam.douyin.ui.rank.RankListViewModel;
 import com.byteteam.douyin.ui.rank.fragment.RankViewModel;
@@ -54,6 +55,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         } else if (modelClass.isAssignableFrom(WorksViewModel.class)) {
             return (T) new WorksViewModel(RepositoryFactory.providerAccessTokenRepository(context)
                     , RepositoryFactory.provideWorksRepository(context));
+        } else if (modelClass.isAssignableFrom(MyFansViewModel.class)) {
+            return (T) new MyFansViewModel(RepositoryFactory.providerAccessTokenRepository(context)
+                    , RepositoryFactory.provideMyFansRepository(context));
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

@@ -40,6 +40,7 @@ public class ResponseTransformer<T extends DouYinBaseData> implements Observable
                     return Observable.error(NetException.handleException(throwable));
                 })
                 .flatMap((Function<DouYinResponse<T>, ObservableSource<T>>) tDouYinResponse -> {
+                    System.out.println("tDouYinResponse:" + tDouYinResponse);
                     T data = tDouYinResponse.getData();
                     // 请求成功
                     if (data != null && data.getErrorCode() == 0) {

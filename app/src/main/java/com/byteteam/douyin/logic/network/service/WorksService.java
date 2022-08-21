@@ -21,10 +21,4 @@ public interface WorksService {
                                                            @Query("cursor") long cursor,
                                                            @Query("count") int count);
 
-    @GET("/video/list/")
-    Observable<DouYinResponse<WorksResponse>> queryTest(@Header("access-token")String accessToken,
-                                 @Query("open_id") String openId,
-                                 @Query("cursor") long cursor,
-                                 @Query("count") int count);
-
 }

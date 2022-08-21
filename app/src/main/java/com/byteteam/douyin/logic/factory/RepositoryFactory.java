@@ -3,6 +3,7 @@ package com.byteteam.douyin.logic.factory;
 import android.content.Context;
 
 import com.byteteam.douyin.logic.dataSource.ClientTokenDataSource;
+import com.byteteam.douyin.logic.dataSource.MyFansDataSource;
 import com.byteteam.douyin.logic.dataSource.RankItemDataSource;
 import com.byteteam.douyin.logic.dataSource.RankListDataSource;
 import com.byteteam.douyin.logic.dataSource.UserDataSource;
@@ -12,6 +13,7 @@ import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.repository.AccessTokenRepository;
 import com.byteteam.douyin.logic.repository.ClientTokenRepository;
 import com.byteteam.douyin.logic.repository.LocalUserRepository;
+import com.byteteam.douyin.logic.repository.MyFansRepository;
 import com.byteteam.douyin.logic.repository.RankItemRepository;
 import com.byteteam.douyin.logic.repository.RankListRepository;
 import com.byteteam.douyin.logic.repository.UserRepository;
@@ -49,6 +51,10 @@ public class RepositoryFactory {
 
     public static WorksDataSource provideWorksRepository(Context context){
         return new WorksRepository(DaoFactory.provideWorksDao(context));
+    }
+
+    public static MyFansDataSource provideMyFansRepository(Context context){
+        return new MyFansRepository(DaoFactory.provideMyFansDao(context));
     }
 
     public static UserDataSource provideLocalUserDataRepository(Context context){

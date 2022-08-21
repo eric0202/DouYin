@@ -6,11 +6,6 @@
         android:title="主页"/>
 
     <item
-        android:id="@+id/works"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="作品"/>
-
-    <item
         android:id="@+id/mine"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="我"/>

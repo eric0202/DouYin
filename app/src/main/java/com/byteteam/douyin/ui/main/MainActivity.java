@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.home) {
                     binding.viewPager2.setCurrentItem(0);
                 } else if (id == R.id.mine) {
-                    binding.viewPager2.setCurrentItem(2);
-                } else if (id == R.id.works) {
                     binding.viewPager2.setCurrentItem(1);
                 }
                 return true;
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         if (adapter == null) {
             List<Fragment> list = new ArrayList<>();
             list.add(HomeFragment.newInstance());
-            list.add(WorksFragment.newInstance());
             list.add(MineFragment.newInstance());
             adapter = new MainLayoutAdapter(list, getSupportFragmentManager(), getLifecycle());
             binding.viewPager2.setAdapter(adapter);
