@@ -7,7 +7,7 @@ android {
 
     signingConfigs {//签名
         appkey {
-            storeFile file('D:\\AndriodStudioSource\\bytedanceKey\\byte_douyin.jks')
+            storeFile file('S:\\字节跳动青训营\\byte_douyin.jks')
             storePassword "bytedouyin"
             keyAlias "bytedouyin"
             keyPassword "bytedouyin"
@@ -111,5 +111,8 @@ dependencies {
     implementation 'jp.wasabeef:blurry:4.0.1'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+
+    // lottie
+    implementation 'com.airbnb.android:lottie:5.2.0'
 
 }

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="主页"/>
 
     <item
         android:id="@+id/works"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="作品"/>
 
     <item
         android:id="@+id/mine"
+        android:icon="@drawable/ic_baseline_person_24"
         android:title="我"/>
-
-    <item
-        android:id="@+id/blank"
-        android:title="测试"/>
 
 </menu>

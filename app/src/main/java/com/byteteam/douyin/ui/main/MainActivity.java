@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import com.byteteam.douyin.R;
 import com.byteteam.douyin.databinding.ActivityMainBinding;
 import com.byteteam.douyin.ui.main.adapter.MainLayoutAdapter;
-import com.byteteam.douyin.ui.main.fragment.BlankFragment;
 import com.byteteam.douyin.ui.main.fragment.HomeFragment;
 import com.byteteam.douyin.ui.main.fragment.MineFragment;
 import com.byteteam.douyin.ui.main.fragment.WorksFragment;
@@ -19,10 +18,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 
 
 /**
@@ -57,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
                     binding.viewPager2.setCurrentItem(2);
                 } else if (id == R.id.works) {
                     binding.viewPager2.setCurrentItem(1);
-                } else if (id == R.id.blank) {
-                    binding.viewPager2.setCurrentItem(3);
                 }
                 return true;
             }
@@ -73,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             list.add(HomeFragment.newInstance());
             list.add(WorksFragment.newInstance());
             list.add(MineFragment.newInstance());
-            list.add(BlankFragment.newInstance());
             adapter = new MainLayoutAdapter(list, getSupportFragmentManager(), getLifecycle());
             binding.viewPager2.setAdapter(adapter);
         }
