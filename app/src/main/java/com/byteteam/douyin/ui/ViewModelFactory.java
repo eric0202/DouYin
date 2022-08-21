@@ -26,7 +26,7 @@ import com.byteteam.douyin.logic.factory.RepositoryFactory;
 import com.byteteam.douyin.ui.main.viewmodel.MyFansViewModel;
 import com.byteteam.douyin.ui.main.viewmodel.WorksViewModel;
 import com.byteteam.douyin.ui.rank.RankListViewModel;
-import com.byteteam.douyin.ui.rank.fragment.FansViewModel;
+import com.byteteam.douyin.ui.main.viewmodel.FollowViewModel;
 import com.byteteam.douyin.ui.rank.fragment.RankViewModel;
 
 /**
@@ -59,8 +59,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         } else if (modelClass.isAssignableFrom(MyFansViewModel.class)) {
             return (T) new MyFansViewModel(RepositoryFactory.providerAccessTokenRepository(context)
                     , RepositoryFactory.provideMyFansRepository(context));
-        }else if(modelClass.isAssignableFrom(FansViewModel.class)){
-            return (T) new FansViewModel(RepositoryFactory.providerAccessTokenRepository(context)
+        }else if(modelClass.isAssignableFrom(FollowViewModel.class)){
+            return (T) new FollowViewModel(RepositoryFactory.providerAccessTokenRepository(context)
                     ,RepositoryFactory.providerFansItemRepository(context));
         }
         throw new IllegalArgumentException("Unknown ViewModel class");

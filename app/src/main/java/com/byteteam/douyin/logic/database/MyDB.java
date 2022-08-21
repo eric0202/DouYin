@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import com.byteteam.douyin.logic.database.converter.StringArrayConverters;
 import com.byteteam.douyin.logic.database.dao.AccessTokenDao;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
-import com.byteteam.douyin.logic.database.dao.FansItemDao;
+import com.byteteam.douyin.logic.database.dao.FollowItemDao;
 import com.byteteam.douyin.logic.database.dao.MyFansDao;
 import com.byteteam.douyin.logic.database.dao.RankItemDao;
 import com.byteteam.douyin.logic.database.dao.RankListDao;
@@ -18,7 +18,7 @@ import com.byteteam.douyin.logic.database.dao.UserDao;
 import com.byteteam.douyin.logic.database.dao.WorksDao;
 import com.byteteam.douyin.logic.database.model.AccessToken;
 import com.byteteam.douyin.logic.database.model.ClientToken;
-import com.byteteam.douyin.logic.database.model.FansItem;
+import com.byteteam.douyin.logic.database.model.FollowItem;
 import com.byteteam.douyin.logic.database.model.MyFans;
 import com.byteteam.douyin.logic.database.model.RankItem;
 import com.byteteam.douyin.logic.database.model.RankList;
@@ -31,7 +31,7 @@ import com.byteteam.douyin.logic.database.model.Works;
  * @time： 2022/8/7 18:10
  */
 @Database(entities = {AccessToken.class, ClientToken.class, RankItem.class, RankList.class
-        , User.class, FansItem.class, Works.class, MyFans.class}, version = 9)
+        , User.class, FollowItem.class, Works.class, MyFans.class}, version = 10)
 @TypeConverters({StringArrayConverters.class})
 public abstract class MyDB extends RoomDatabase {
 
@@ -47,7 +47,7 @@ public abstract class MyDB extends RoomDatabase {
 
     public abstract WorksDao worksDao();
 
-    public abstract FansItemDao fansItemDao();
+    public abstract FollowItemDao fansItemDao();
 
     public abstract MyFansDao myFansDao();
 

@@ -1,16 +1,11 @@
-package com.byteteam.douyin.ui.rank.fragment;
+package com.byteteam.douyin.ui.main.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
 import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.dataSource.FansItemDataSource;
-import com.byteteam.douyin.logic.dataSource.MyFansDataSource;
 import com.byteteam.douyin.logic.database.model.AccessToken;
-import com.byteteam.douyin.logic.database.model.FansItem;
-import com.byteteam.douyin.logic.network.model.FansData;
-import com.byteteam.douyin.logic.network.model.MyFansData;
-
-import java.util.List;
+import com.byteteam.douyin.logic.network.model.FollowData;
 
 import io.reactivex.Maybe;
 
@@ -20,12 +15,12 @@ import io.reactivex.Maybe;
  * @time： 2022/8/21
  */
 
-public class FansViewModel extends ViewModel {
+public class FollowViewModel extends ViewModel {
     private final AccessTokenDataSource accessTokenDataSource;
 
     private final FansItemDataSource fansItemDataSource;
 
-    public FansViewModel(AccessTokenDataSource accessTokenDataSource, FansItemDataSource fansItemDataSource) {
+    public FollowViewModel(AccessTokenDataSource accessTokenDataSource, FansItemDataSource fansItemDataSource) {
         this.accessTokenDataSource = accessTokenDataSource;
         this.fansItemDataSource = fansItemDataSource;
     }
@@ -34,7 +29,7 @@ public class FansViewModel extends ViewModel {
         return accessTokenDataSource.getAccessToken();
     }
 
-    public Maybe<FansData> queryFans(AccessToken accessToken, int cursor) {
+    public Maybe<FollowData> queryFans(AccessToken accessToken, int cursor) {
         return fansItemDataSource.queryFans(accessToken.getAccessToken(), accessToken.getOpenId(), cursor);
     }
 }

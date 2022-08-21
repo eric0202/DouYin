@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -35,9 +33,7 @@ import com.byteteam.douyin.logic.database.dao.UserDao;
 import com.byteteam.douyin.logic.database.model.User;
 import com.byteteam.douyin.logic.factory.DaoFactory;
 import com.byteteam.douyin.logic.factory.RepositoryFactory;
-import com.byteteam.douyin.ui.main.adapter.PlaceholderFragment;
 import com.byteteam.douyin.ui.rank.adapter.ViewPagerAdapter;
-import com.byteteam.douyin.ui.rank.fragment.FansFragment;
 import com.byteteam.douyin.util.AnimationUtil;
 import com.byteteam.douyin.util.UriUtil;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -102,7 +98,7 @@ public class MineFragment extends Fragment {
         // 设置滑动布局
         List<Fragment> list = new ArrayList<>();
         list.add(WorksFragment.newInstance());
-        list.add(FansFragment.newInstance(1));
+        list.add(FollowFragment.newInstance());
         list.add(MyFanFragment.newInstance());
         ViewPagerAdapter adapter = new ViewPagerAdapter(list, getParentFragmentManager(), getLifecycle());
         binding.viewPager.setAdapter(adapter);
