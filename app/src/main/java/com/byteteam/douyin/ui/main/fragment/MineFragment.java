@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -198,6 +199,9 @@ public class MineFragment extends Fragment {
 
                     User newUser = new User(user);
                     newUser.setBackground(UriUtil.convertUriToPath(getContext(),background));
+                    Log.e("User",user.toString());
+                    Log.e("NewUser",newUser.toString());
+                    userDao.deleteUser(user);
                     userDao.insertUser(newUser);
                     displayUser(newUser);
                 });
