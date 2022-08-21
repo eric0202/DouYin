@@ -29,9 +29,7 @@
         <activity
             android:name=".ui.rank.FansActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.rank.FansListActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait"

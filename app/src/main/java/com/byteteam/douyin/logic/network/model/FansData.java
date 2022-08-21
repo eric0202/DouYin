@@ -1,6 +1,11 @@
 package com.byteteam.douyin.logic.network.model;
 
+import androidx.annotation.NonNull;
+
+import com.byteteam.douyin.logic.database.model.FansItem;
+
 import com.byteteam.douyin.logic.network.response.DouYinBaseData;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -11,23 +16,61 @@ import java.util.List;
  */
 
 
-public class FansData<T> extends DouYinBaseData {
-    private List<T> list;
+public class FansData extends DouYinBaseData {
 
-    public List<T> getList() {
+    // 关注者列表
+    private List<FansItem> list;
+
+    // 用于下一页请求的cursor
+    private Long cursor;
+
+    // 是否还有下一页
+    @SerializedName("has_more")
+    private boolean hasMore;
+
+    // 关注者总数
+    private Integer total;
+
+    public List<FansItem> getList() {
         return list;
     }
 
-    public void setList(List<T> list) {
+    public void setList(List<FansItem> list) {
         this.list = list;
     }
 
+    public Long getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(Long cursor) {
+        this.cursor = cursor;
+    }
+
+    public boolean isHasMore() {
+        return hasMore;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        this.hasMore = hasMore;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "FansData{" +
                 "list=" + list +
-                ", errorCode=" + errorCode +
-                ", description='" + description + '\'' +
+                ", cursor=" + cursor +
+                ", hasMore=" + hasMore +
+                ", total=" + total +
                 '}';
     }
 }

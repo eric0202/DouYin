@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "67380d796d30d76c4198a9cbc53a7435",
+    "identityHash": "6575e6641592a9d742e871a44f0ca53e",
     "entities": [
       {
         "tableName": "AccessToken",
@@ -316,42 +316,54 @@
       },
       {
         "tableName": "FansItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `artNum` INTEGER NOT NULL, `type` INTEGER NOT NULL, `poster` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `gender` INTEGER, `nickname` TEXT, `avatar` TEXT, `city` TEXT, `province` TEXT, `country` TEXT)",
         "fields": [
           {
-            "fieldPath": "mid",
-            "columnName": "mid",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nickname",
+            "columnName": "nickname",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "artNum",
-            "columnName": "artNum",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "avatar",
+            "columnName": "avatar",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
-            "fieldPath": "type",
-            "columnName": "type",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
-            "fieldPath": "poster",
-            "columnName": "poster",
+            "fieldPath": "province",
+            "columnName": "province",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "mid"
+            "id"
           ],
           "autoGenerate": true
         },
@@ -528,7 +540,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '67380d796d30d76c4198a9cbc53a7435')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6575e6641592a9d742e871a44f0ca53e')"
     ]
   }
 }

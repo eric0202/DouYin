@@ -6,7 +6,7 @@
     tools:context=".ui.rank.fragment.FansFragment">
 
     <com.byteteam.douyin.widget.MySwipeRefreshLayout
-        android:id="@+id/fans_swipefresh"
+        android:id="@+id/swipefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fans_recylerview"
+                android:id="@+id/recylerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -24,12 +24,17 @@
     </com.byteteam.douyin.widget.MySwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/fans_msg_text"
+        android:id="@+id/msg_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="错误"
         android:layout_centerInParent="true"
         android:visibility="gone"
         android:layout_margin="15dp"/>
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

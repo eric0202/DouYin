@@ -13,21 +13,29 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.byteteam.douyin.R;
 import com.byteteam.douyin.databinding.FragmentFansBinding;
+import com.byteteam.douyin.databinding.FragmentMyFansBinding;
 import com.byteteam.douyin.logic.database.model.FansItem;
+import com.byteteam.douyin.logic.database.model.MyFans;
 import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
 import com.byteteam.douyin.logic.network.exception.NetException;
+import com.byteteam.douyin.logic.network.model.FansData;
 import com.byteteam.douyin.ui.ViewModelFactory;
 import com.byteteam.douyin.ui.custom.adapter.ExtendAdapter;
+import com.byteteam.douyin.ui.main.adapter.MyFansAdapter;
+import com.byteteam.douyin.ui.main.adapter.MyFansHeaderAdapter;
+import com.byteteam.douyin.ui.main.fragment.MyFanFragment;
+import com.byteteam.douyin.ui.main.viewmodel.MyFansViewModel;
 import com.byteteam.douyin.ui.rank.FansActivity;
-import com.byteteam.douyin.ui.rank.FansListActivity;
-import com.byteteam.douyin.ui.rank.RankListActivity;
 import com.byteteam.douyin.ui.rank.adapter.FansAdapter;
+import com.byteteam.douyin.ui.rank.adapter.FansHeaderAdapter;
 import com.byteteam.douyin.ui.rank.adapter.RankHeaderAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -38,104 +46,128 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class FansFragment extends Fragment {
 
-    public static FansFragment newInstance(int type) {
-        return new FansFragment(type);
+    public static FansFragment newInstance() {
+        return new FansFragment();
     }
-
-    // 榜单类型
-    private final int type;
 
     private FansViewModel vm;
 
-    private FragmentFansBinding binding;
+    FragmentFansBinding binding;
 
-    public FansFragment(int type) {
-        this.type = type;
-    }
+    private CompositeDisposable disposable;
 
-    // Disposable管理器
-    private CompositeDisposable compositeDisposable;
+    private FansHeaderAdapter fansHeaderAdapter;
 
-    // 列表适配器
-    private ExtendAdapter extendAdapter;
+    private ExtendAdapter adapter;
 
-    private FansAdapter adapter;
+    private FansAdapter fansAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // 实例化ViewModel
-        vm = new ViewModelProvider(this, ViewModelFactory.provide(requireContext())).get(FansViewModel.class);
-        compositeDisposable = new CompositeDisposable();
         binding = FragmentFansBinding.inflate(getLayoutInflater(), container, false);
-        binding.fansSwipefresh.setOnRefreshListener(this::loadList);
+        vm = new ViewModelProvider(this, ViewModelFactory.provide(requireActivity())).get(FansViewModel.class);
+        disposable = new CompositeDisposable();
         // 设置列表相关属性
-        binding.fansRecylerview.setItemAnimator(new DefaultItemAnimator());
-        binding.fansRecylerview.setHasFixedSize(true);
-        binding.fansRecylerview.setItemViewCacheSize(15);
-        binding.fansSwipefresh.setColorSchemeColors(requireContext().getResources().getColor(R.color.purple_500));
+        binding.recylerview.setItemAnimator(new DefaultItemAnimator());
+        binding.recylerview.setHasFixedSize(true);
+        binding.recylerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (recyclerView.getLayoutManager() != null) {
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    //屏幕中最后一个可见子项的position
+                    int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+                    //当前屏幕所看到的子项个数
+                    int visibleItemCount = layoutManager.getChildCount();
+                    //当前RecyclerView的所有子项个数
+                    int totalItemCount = layoutManager.getItemCount();
+                    //RecyclerView的滑动状态
+                    int state = recyclerView.getScrollState();
+                    if (!scrollInLast && visibleItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1 && state == RecyclerView.SCROLL_STATE_IDLE) {
+                        scrollInLast = true;
+                        if (hasMore) {
+                            loadList();
+                            if (adapter != null) {
+                                adapter.changeFooter(1);
+                            }
+                        } else {
+                            Toast.makeText(requireContext(),"没有更多了",Toast.LENGTH_SHORT).show();
+                            adapter.changeFooter(0);
+                        }
+                    }
+                }
+            }
+        });
         return binding.getRoot();
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        binding.fansSwipefresh.setRefreshing(true);
+    public void onResume() {
+        super.onResume();
+        binding.loading.setVisibility(View.VISIBLE);
         loadList();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        disposable.clear();
+    }
+
+    private int cursor;
+
+    private boolean hasMore;
+
+    private boolean scrollInLast;
+
     private void loadList() {
-        // 请求获取榜单列表
-        compositeDisposable.add(vm.getFansList(type)
-                .subscribe(fansItem -> {
-                    if (fansItem.size() > 0) {
-                        if (adapter == null) {
-                            binding.fansRecylerview.setLayoutManager(new LinearLayoutManager(requireContext()));
-                        }
-                        adapter = new FansAdapter(fansItem,type);
-                        adapter.setHasStableIds(true);
-                        // 设置列表头部
-//                        RankHeaderAdapter rankHeaderAdapter = new RankHeaderAdapter(() -> {
-//                            Intent intent = new Intent(requireActivity(), RankListActivity.class);
-//                            intent.putExtra("type",type);
-//                            requireActivity().startActivityFromFragment(RankListActivity.this,intent,0);
-//                        });
-//                        extendAdapter = new ExtendAdapter(rankHeaderAdapter, adapter, true);
-//                        binding.fansRecylerview.setAdapter(extendAdapter.getAdapter());
-                    }
-                    binding.fansRecylerview.setVisibility(View.VISIBLE);
-                    binding.fansSwipefresh.setRefreshing(false);
-                    binding.fansMsgText.setVisibility(View.GONE);
-                }, new ErrorConsumer() {
-                    @Override
-                    protected void error(NetException e) {
-                        if (adapter != null) {
-                            int count = adapter.getItemCount();
-                            adapter.setDates(new ArrayList<>());
-                            adapter.notifyItemRangeRemoved(0,count);
-                        }
-                        binding.fansRecylerview.setVisibility(View.INVISIBLE);
-                        Toast.makeText(requireContext(), e.getMsg(), Toast.LENGTH_SHORT).show();
-                        binding.fansSwipefresh.setRefreshing(false);
-                        binding.fansMsgText.setVisibility(View.VISIBLE);
-                        binding.fansMsgText.setText(e.getMsg() + "，请下拉刷新");
-                    }
+        // 请求获取个人作品列表
+        disposable.add(vm.getAccessToken().doOnComplete(() -> { // 获取失败()
+                    binding.loading.setVisibility(View.GONE);
+                    binding.msgText.setVisibility(View.VISIBLE);
+                    binding.msgText.setText("应用未授权");
+                })
+                .subscribe(accessToken -> {
+                    binding.loading.setVisibility(View.GONE);
+                    disposable.add(vm.queryFans(accessToken, cursor)
+                            .subscribe(FansData -> {
+                                List<FansItem> fans = FansData.getList();
+                                if (fans.size() > 0) {
+                                    if (adapter == null) {
+                                        binding.recylerview.setLayoutManager(new LinearLayoutManager(requireContext()));
+                                    }
+                                    if (cursor == 0) { // adapter
+                                        fansAdapter = new FansAdapter(fans);
+                                        fansAdapter.setHasStableIds(true);
+                                        fansHeaderAdapter = new FansHeaderAdapter();
+                                        adapter = new ExtendAdapter(fansHeaderAdapter, fansAdapter, true);
+                                        binding.recylerview.setAdapter(adapter.getAdapter());
+                                    } else {
+                                        int p = fansAdapter.getItemCount();
+                                        fansAdapter.addDate(fans);
+                                        fansAdapter.notifyItemRangeInserted(p,fans.size());
+                                    }
+                                } else if (adapter == null) {
+                                    binding.msgText.setVisibility(View.VISIBLE);
+                                    binding.msgText.setText("没有更多了");
+                                }
+                                fansHeaderAdapter.setFansCount(FansData.getTotal());
+                                binding.msgText.setVisibility(View.GONE);
+                                hasMore = FansData.isHasMore();
+                                if (!hasMore || cursor == 0) {
+                                    scrollInLast = false;
+                                }
+                                cursor = Math.toIntExact(hasMore ? FansData.getCursor() : cursor);
+                            }, new ErrorConsumer() {
+                                @Override
+                                protected void error(NetException e) {
+                                    Toast.makeText(requireContext(),"获取个人作品失败：" + e.getMsg(), Toast.LENGTH_SHORT).show();
+                                    binding.msgText.setVisibility(View.VISIBLE);
+                                    binding.msgText.setText(e.getMsg());
+                                }
+                            }));
                 }));
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // 清理订阅
-        compositeDisposable.clear();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0 && data != null) {
-            loadList();
-        }
     }
 
 }

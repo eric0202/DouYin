@@ -15,12 +15,12 @@ import io.reactivex.Single;
 
 @Dao
 public interface FansItemDao {
-    @Query("select * from fansitem where type == :type")
-    Maybe<List<FansItem>> queryFans(int type);
+    @Query("select * from fansitem")
+    Maybe<List<FansItem>> queryFansList();
 
     @Insert
     Completable insert(List<FansItem> fansItem);
 
-    @Query("delete from fansitem where type == :type")
-    Completable delete(int type);
+    @Query("delete from fansitem")
+    Completable delete();
 }
