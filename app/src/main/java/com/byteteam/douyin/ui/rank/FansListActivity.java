@@ -47,9 +47,9 @@ public class FansListActivity extends AppCompatActivity {
 //        super.onCreate(savedInstanceState);
 //        // 获取榜单类型，默认为1
 //        if (getIntent() != null) {
-//            rankType = getIntent().getIntExtra("type",1);
+//            FansType = getIntent().getIntExtra("type",1);
 //        }
-//        binding = ActivityRankListBinding.inflate(getLayoutInflater());
+//        binding = ActivityFansListBinding.inflate(getLayoutInflater());
 //        vm = new ViewModelProvider(this, ViewModelFactory.provide(this)).get(RankListViewModel.class);
 //        setContentView(binding.getRoot());
 //        // 往顶部标题栏增加返回按钮
