@@ -6,6 +6,7 @@ import com.byteteam.douyin.logic.dataSource.ClientTokenDataSource;
 import com.byteteam.douyin.logic.dataSource.RankItemDataSource;
 import com.byteteam.douyin.logic.dataSource.RankListDataSource;
 import com.byteteam.douyin.logic.dataSource.UserDataSource;
+import com.byteteam.douyin.logic.dataSource.WorksDataSource;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
 import com.byteteam.douyin.logic.dataSource.AccessTokenDataSource;
 import com.byteteam.douyin.logic.repository.AccessTokenRepository;
@@ -14,6 +15,7 @@ import com.byteteam.douyin.logic.repository.LocalUserRepository;
 import com.byteteam.douyin.logic.repository.RankItemRepository;
 import com.byteteam.douyin.logic.repository.RankListRepository;
 import com.byteteam.douyin.logic.repository.UserRepository;
+import com.byteteam.douyin.logic.repository.WorksRepository;
 
 /**
  * @introduction： 仓库工厂类
@@ -43,6 +45,10 @@ public class RepositoryFactory {
     public static UserDataSource provideUserDataRepository(Context context){
         return new UserRepository(providerAccessTokenRepository(context)
                 , DaoFactory.provideUserDao(context));
+    }
+
+    public static WorksDataSource provideWorksRepository(Context context){
+        return new WorksRepository(DaoFactory.provideWorksDao(context));
     }
 
     public static UserDataSource provideLocalUserDataRepository(Context context){

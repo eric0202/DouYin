@@ -4,6 +4,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -12,6 +18,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+
     }
 }

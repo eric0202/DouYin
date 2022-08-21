@@ -401,6 +401,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="10dp"
+                        android:id="@+id/cv_edit_profile"
                         android:elevation="0dp"
                         android:layout_weight="1">
 
@@ -423,6 +424,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="10dp"
+                        android:id="@+id/cv_new_friends"
                         android:background="#A0A0A0"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
