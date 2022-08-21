@@ -6,6 +6,7 @@ import com.byteteam.douyin.logic.database.MyDB;
 import com.byteteam.douyin.logic.database.dao.AccessTokenDao;
 import com.byteteam.douyin.logic.database.dao.ClientTokenDao;
 import com.byteteam.douyin.logic.database.dao.MyFansDao;
+import com.byteteam.douyin.logic.database.dao.FansItemDao;
 import com.byteteam.douyin.logic.database.dao.RankItemDao;
 import com.byteteam.douyin.logic.database.dao.RankListDao;
 import com.byteteam.douyin.logic.database.dao.UserDao;
@@ -48,6 +49,10 @@ public class DaoFactory {
 
     public static MyFansDao provideMyFansDao(Context context) {
         return providerAppDatabase(context).myFansDao();
+    }
+
+    public static FansItemDao providerFansItemDao(Context context) {
+        return providerAppDatabase(context).fansItemDao();
     }
 
 }

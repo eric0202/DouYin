@@ -48,7 +48,7 @@ public class FansItemRepository implements FansItemDataSource {
                     // 成功获取ClientToken
                     Retrofit retrofit = NetWorkFactory.provideRetrofit();
                     FansService fansService = retrofit.create(FansService.class);
-                    // 根据是否需要版本号选择请求方式
+
                     Observable<DouYinResponse<FansData<FansItem>>> observable
                             = fansService.getFans(clientToken.getAccessToken(), type); // 获取最新
                     return observable

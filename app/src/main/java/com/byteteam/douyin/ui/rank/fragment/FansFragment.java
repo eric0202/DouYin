@@ -22,6 +22,7 @@ import com.byteteam.douyin.logic.network.exception.NetException;
 import com.byteteam.douyin.ui.ViewModelFactory;
 import com.byteteam.douyin.ui.custom.adapter.ExtendAdapter;
 import com.byteteam.douyin.ui.rank.FansActivity;
+import com.byteteam.douyin.ui.rank.FansListActivity;
 import com.byteteam.douyin.ui.rank.RankListActivity;
 import com.byteteam.douyin.ui.rank.adapter.FansAdapter;
 import com.byteteam.douyin.ui.rank.adapter.RankHeaderAdapter;
@@ -94,13 +95,13 @@ public class FansFragment extends Fragment {
                         adapter = new FansAdapter(fansItem,type);
                         adapter.setHasStableIds(true);
                         // 设置列表头部
-                        RankHeaderAdapter rankHeaderAdapter = new RankHeaderAdapter(() -> {
-                            Intent intent = new Intent(requireActivity(), RankListActivity.class);
-                            intent.putExtra("type",type);
-                            requireActivity().startActivityFromFragment(FansFragment.this,intent,0);
-                        });
-                        extendAdapter = new ExtendAdapter(rankHeaderAdapter, adapter, true);
-                        binding.fansRecylerview.setAdapter(extendAdapter.getAdapter());
+//                        RankHeaderAdapter rankHeaderAdapter = new RankHeaderAdapter(() -> {
+//                            Intent intent = new Intent(requireActivity(), RankListActivity.class);
+//                            intent.putExtra("type",type);
+//                            requireActivity().startActivityFromFragment(RankListActivity.this,intent,0);
+//                        });
+//                        extendAdapter = new ExtendAdapter(rankHeaderAdapter, adapter, true);
+//                        binding.fansRecylerview.setAdapter(extendAdapter.getAdapter());
                     }
                     binding.fansRecylerview.setVisibility(View.VISIBLE);
                     binding.fansSwipefresh.setRefreshing(false);
