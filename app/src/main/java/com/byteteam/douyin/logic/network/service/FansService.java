@@ -17,6 +17,8 @@ import retrofit2.http.Query;
 
 public interface FansService {
     @GET("/following/list/")
-    Observable<DouYinResponse<FansData<FansItem>>> getFans(@Header("access-token")String clientToken
-            , @Query("type") int type);
+    Observable<DouYinResponse<FansData>> queryFans(@Header("access-token")String accessToken,
+                                                   @Query("open_id") String openId,
+                                                   @Query("cursor") long cursor,
+                                                   @Query("count") int count);
 }

@@ -60,7 +60,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new MyFansViewModel(RepositoryFactory.providerAccessTokenRepository(context)
                     , RepositoryFactory.provideMyFansRepository(context));
         }else if(modelClass.isAssignableFrom(FansViewModel.class)){
-            return (T) new FansViewModel(RepositoryFactory.providerFansItemRepository(context));
+            return (T) new FansViewModel(RepositoryFactory.providerAccessTokenRepository(context)
+                    ,RepositoryFactory.providerFansItemRepository(context));
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

@@ -59,14 +59,15 @@ public class RepositoryFactory {
         return new MyFansRepository(DaoFactory.provideMyFansDao(context));
     }
 
+    public static FansItemDataSource providerFansItemRepository(Context context){
+        return new FansItemRepository(DaoFactory.providerFansItemDao(context));
+    }
+
     public static UserDataSource provideLocalUserDataRepository(Context context){
         return new LocalUserRepository(DaoFactory.provideUserDao(context));
     }
 
-    public static FansItemDataSource providerFansItemRepository(Context context){
-        return new FansItemRepository(providerClientTokenRepository(context)
-                ,DaoFactory.providerFansItemDao(context));
-    }
+
 
 
 

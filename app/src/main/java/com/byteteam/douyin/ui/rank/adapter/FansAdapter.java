@@ -5,11 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.byteteam.douyin.R;
+import com.byteteam.douyin.databinding.ListItemFansBinding;
+import com.byteteam.douyin.databinding.ListItemMyFansBinding;
 import com.byteteam.douyin.logic.database.model.FansItem;
+import com.byteteam.douyin.logic.database.model.MyFans;
 import com.byteteam.douyin.logic.database.model.RankItem;
+import com.byteteam.douyin.ui.main.adapter.MyFansAdapter;
 import com.byteteam.douyin.ui.rank.holder.BaseFansHolder;
 import com.byteteam.douyin.ui.rank.holder.FansHolder;
 import com.byteteam.douyin.ui.rank.holder.VarietyHolder;
@@ -23,42 +28,34 @@ import java.util.List;
  */
 
 
-public class FansAdapter extends RecyclerView.Adapter<BaseFansHolder>{
+public class FansAdapter extends RecyclerView.Adapter<FansAdapter.FansHolder>{
 
 
-    private List<FansItem> dates;
+    private final List<FansItem> dates;
 
-    // 榜单类型：1 关注者 2 粉丝
-    private final int type;
-
-    public FansAdapter(List<FansItem> dates, int type) {
+    public FansAdapter(List<FansItem> dates) {
         this.dates = dates;
-        this.type = type;
+    }
+
+    public void addDate(List<FansItem> works) {
+        dates.addAll(works);
     }
 
     @NonNull
     @Override
-    public BaseFansHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        /*
-            给不同类型的榜单指定不同的xml布局
-         */
-        if (viewType == 1) { // 关注者
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_fans, parent, false);
-            return new FansHolder(itemView);
-        }
-        // 粉丝
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_fans, parent, false);
+    public FansAdapter.FansHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_my_fans, parent, false);
         return new FansHolder(itemView);
-
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseFansHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FansAdapter.FansHolder holder, int position) {
         holder.bind(dates.get(position));
     }
 
-    public void setDates(List<FansItem> dates) {
-        this.dates = dates;
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -66,14 +63,20 @@ public class FansAdapter extends RecyclerView.Adapter<BaseFansHolder>{
         return dates.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return type;
+    public static class FansHolder extends RecyclerView.ViewHolder {
+
+        ListItemFansBinding binding;
+
+        public FansHolder(@NonNull View itemView) {
+            super(itemView);
+            binding = DataBindingUtil.bind(itemView);
+        }
+
+        public void bind(FansItem fansItem) {
+            binding.setItem(fansItem);
+        }
+
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
 
 }

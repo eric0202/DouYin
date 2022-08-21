@@ -3,12 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
-        <import type="com.byteteam.douyin.util.StringUtil" />
-
-        <import type="android.view.View" />
-
         <variable
-            name="fans"
+            name="item"
             type="com.byteteam.douyin.logic.database.model.FansItem" />
     </data>
 
@@ -25,7 +21,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            app:srcCompat="@{fans.poster,default = `@drawable/ic_img_load_fail`}" />
+            android:contentDescription="circle"
+            app:srcCompat="@{item.avatar,default = `@drawable/ic_img_load_fail`}" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -38,18 +35,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{fans.name, default = `关注者姓名`}"
+                android:text="@{item.nickname, default = `用户姓名`}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@{fans.artNum, default = `0个作品未看`}"
-                android:textColor="@color/textO_on_white_body"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.gender == 0 ? `未知性别` : item.gender == 1 ? `男` : `女`, default = `性别`}"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{item.country + item.province + item.city, default = `位置`}"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

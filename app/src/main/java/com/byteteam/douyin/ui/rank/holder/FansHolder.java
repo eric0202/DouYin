@@ -25,6 +25,6 @@ public class FansHolder extends BaseFansHolder{
 
     @Override
     public void bind(FansItem fansItem) {
-        binding.setFans(fansItem);
+        binding.setItem(fansItem);
     }
 }

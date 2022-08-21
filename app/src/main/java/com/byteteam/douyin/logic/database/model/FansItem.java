@@ -15,68 +15,92 @@ import java.util.Arrays;
 @Entity
 public class FansItem {
     @PrimaryKey(autoGenerate = true)
-    private int mid;
+    private int id;
 
-    // 关注者姓名
-    private String name;
+    // 性别: `0` - 未知， `1` - 男性， `2` - 女性
+    private Integer gender;
 
-    // 关注者作品数
-    private int artNum;
+    // 用户昵称
+    private String nickname;
 
-    // 1代表关注者，2代表粉丝
-    private int type;
+    // 用户头像
+    private String avatar;
 
-    // 头像缩略图链接
-    private String poster;
+    // 用户所在城市
+    private String city;
 
-    public String getName() {
-        return name;
+    // 用户所在省份
+    private String province;
+
+    // 用户所在国家
+    private String country;
+
+    public int getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getType() {
-        return type;
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
-    public int getArtNum() {
-        return artNum;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setArtNum(int artNum) {
-        this.artNum = artNum;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getPoster() {
-        return poster;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public int getMid() {
-        return mid;
+    public String getCity() {
+        return city;
     }
 
-    public void setMid(int mid) {
-        this.mid = mid;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
     public String toString() {
         return "FansItem{" +
-                "mid=" + mid +
-                ", name='" + name + '\'' +
-                ", artNum=" + artNum +
-                ", type=" + type +
-                ", poster='" + poster + '\'' +
+                "id=" + id +
+                ", gender=" + gender +
+                ", nickname='" + nickname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 }

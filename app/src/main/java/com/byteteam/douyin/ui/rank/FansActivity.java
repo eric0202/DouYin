@@ -66,8 +66,8 @@ public class FansActivity extends AppCompatActivity {
             binding.fansTablayout.addTab(binding.fansTablayout.newTab().setText("关注"));
             binding.fansTablayout.addTab(binding.fansTablayout.newTab().setText("粉丝"));
             List<Fragment> list = new ArrayList<>();
-            list.add(FansFragment.newInstance(1));
-            list.add(RankFragment.newInstance(2));
+//            list.add(FansFragment.newInstance());
+//            list.add(FansFragment.newInstance());
             adapter = new ViewPagerAdapter(list,getSupportFragmentManager(),getLifecycle());
             binding.fansViewpager2.setAdapter(adapter);
         }
