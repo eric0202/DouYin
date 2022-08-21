@@ -9,8 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.Rotate;
 import com.bumptech.glide.request.RequestOptions;
 import com.byteteam.douyin.R;
 import com.byteteam.douyin.databinding.FragmentMineBinding;
@@ -51,6 +54,11 @@ public class MineFragment extends Fragment {
 
     private FragmentMineBinding binding;
 
+    private boolean singleLine = true;
+
+    private View.OnClickListener noFunctionListener , disNoFunctionListener;
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -65,6 +73,9 @@ public class MineFragment extends Fragment {
         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
         toolBarLayout.setTitle(requireActivity().getTitle());
 
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+
         View.OnClickListener getUserListener = view -> {
             UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
             userDataSource.queryUser()
@@ -78,6 +89,41 @@ public class MineFragment extends Fragment {
 
 
         };
+
+        noFunctionListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AnimationUtil.doPressAnimation(view);
+                showNoFunction();
+            }
+        };
+
+        disNoFunctionListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNoFunction();
+            }
+        };
+
+
+        ImageButton btn_expand = binding.btnExpand;
+        btn_expand.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                TextView tv = binding.tvInfo;
+                singleLine = !singleLine;
+                tv.setSingleLine(singleLine);
+                if (singleLine){
+                    Glide.with(getContext()).load(R.drawable.arrow).into(binding.btnExpand);
+                }else{
+                    Glide.with(getContext()).load(R.drawable.arrow).transform(new Rotate(180)).into(binding.btnExpand);
+                }
+            }
+        });
+
+        ImageButton btn_edit = binding.btnModify;
+        btn_edit.setOnClickListener(noFunctionListener);
 
         View.OnClickListener menuClickListener = view -> {
             AnimationUtil.doPressAnimation(view);
@@ -125,8 +171,18 @@ public class MineFragment extends Fragment {
 
         binding.imgAvatar.setOnClickListener(getUserListener);
 
+        bindNoFunction();
+
         return binding.getRoot();
 
+    }
+
+    private void bindNoFunction() {
+        binding.cvEditProfile.setOnClickListener(noFunctionListener);
+        binding.cvNewFriends.setOnClickListener(noFunctionListener);
+        binding.clStore.setOnClickListener(noFunctionListener);
+        binding.clOpen.setOnClickListener(noFunctionListener);
+        binding.llRates.setOnClickListener(disNoFunctionListener);
     }
 
     // 从数据库加载user
@@ -165,14 +221,26 @@ public class MineFragment extends Fragment {
 
                 case R.id.settings:
                     showNoFunction();
+                    return true;
                 case R.id.logout:
-                    // todo
+                    // logout
+                    showNoFunction();
+                    return true;
                 case R.id.change_bg:
-                    // todo
+                    // bg
+                    showNoFunction();
+                    return true;
 
             }
 
             return true;
+        });
+
+        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu popupMenu) {
+                AnimationUtil.doPressAnimation(view);
+            }
         });
 
         popupMenu.show();
@@ -217,7 +285,7 @@ public class MineFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_scrolling, menu);
+        inflater.inflate(R.menu.menu_settings_mine, menu);
     }
 
     @Override
