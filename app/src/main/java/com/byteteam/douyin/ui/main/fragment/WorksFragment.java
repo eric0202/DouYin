@@ -154,6 +154,7 @@ public class WorksFragment extends Fragment {
                             }, new ErrorConsumer() {
                                 @Override
                                 protected void error(NetException e) {
+                                    binding.loading.setVisibility(View.GONE);
                                     Toast.makeText(requireContext(),"获取个人作品失败：" + e.getMsg(), Toast.LENGTH_SHORT).show();
                                     binding.msgText.setVisibility(View.VISIBLE);
                                     binding.msgText.setText(e.getMsg());

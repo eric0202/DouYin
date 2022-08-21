@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 
 @Entity
-public class FansItem {
+public class FollowItem {
     @PrimaryKey(autoGenerate = true)
     private int id;
 

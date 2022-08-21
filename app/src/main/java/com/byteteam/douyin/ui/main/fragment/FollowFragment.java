@@ -1,6 +1,5 @@
-package com.byteteam.douyin.ui.rank.fragment;
+package com.byteteam.douyin.ui.main.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,26 +14,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.byteteam.douyin.R;
-import com.byteteam.douyin.databinding.FragmentFansBinding;
-import com.byteteam.douyin.databinding.FragmentMyFansBinding;
-import com.byteteam.douyin.logic.database.model.FansItem;
-import com.byteteam.douyin.logic.database.model.MyFans;
+import com.byteteam.douyin.databinding.FragmentFollowBinding;
+import com.byteteam.douyin.logic.database.model.FollowItem;
 import com.byteteam.douyin.logic.network.exception.ErrorConsumer;
 import com.byteteam.douyin.logic.network.exception.NetException;
-import com.byteteam.douyin.logic.network.model.FansData;
 import com.byteteam.douyin.ui.ViewModelFactory;
 import com.byteteam.douyin.ui.custom.adapter.ExtendAdapter;
-import com.byteteam.douyin.ui.main.adapter.MyFansAdapter;
-import com.byteteam.douyin.ui.main.adapter.MyFansHeaderAdapter;
-import com.byteteam.douyin.ui.main.fragment.MyFanFragment;
-import com.byteteam.douyin.ui.main.viewmodel.MyFansViewModel;
-import com.byteteam.douyin.ui.rank.FansActivity;
-import com.byteteam.douyin.ui.rank.adapter.FansAdapter;
-import com.byteteam.douyin.ui.rank.adapter.FansHeaderAdapter;
-import com.byteteam.douyin.ui.rank.adapter.RankHeaderAdapter;
+import com.byteteam.douyin.ui.main.adapter.FollowAdapter;
+import com.byteteam.douyin.ui.main.viewmodel.FollowViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -44,29 +32,27 @@ import io.reactivex.disposables.CompositeDisposable;
  * @author： 陈光磊
  * @time： 2022/8/19 21:10
  */
-public class FansFragment extends Fragment {
+public class FollowFragment extends Fragment {
 
-    public static FansFragment newInstance() {
-        return new FansFragment();
+    public static FollowFragment newInstance() {
+        return new FollowFragment();
     }
 
-    private FansViewModel vm;
+    private FollowViewModel vm;
 
-    FragmentFansBinding binding;
+    FragmentFollowBinding binding;
 
     private CompositeDisposable disposable;
 
-    private FansHeaderAdapter fansHeaderAdapter;
-
     private ExtendAdapter adapter;
 
-    private FansAdapter fansAdapter;
+    private FollowAdapter followAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentFansBinding.inflate(getLayoutInflater(), container, false);
-        vm = new ViewModelProvider(this, ViewModelFactory.provide(requireActivity())).get(FansViewModel.class);
+        binding = FragmentFollowBinding.inflate(getLayoutInflater(), container, false);
+        vm = new ViewModelProvider(this, ViewModelFactory.provide(requireActivity())).get(FollowViewModel.class);
         disposable = new CompositeDisposable();
         // 设置列表相关属性
         binding.recylerview.setItemAnimator(new DefaultItemAnimator());
@@ -129,30 +115,28 @@ public class FansFragment extends Fragment {
                     binding.msgText.setText("应用未授权");
                 })
                 .subscribe(accessToken -> {
-                    binding.loading.setVisibility(View.GONE);
                     disposable.add(vm.queryFans(accessToken, cursor)
                             .subscribe(FansData -> {
-                                List<FansItem> fans = FansData.getList();
+                                binding.loading.setVisibility(View.GONE);
+                                List<FollowItem> fans = FansData.getList();
                                 if (fans.size() > 0) {
                                     if (adapter == null) {
                                         binding.recylerview.setLayoutManager(new LinearLayoutManager(requireContext()));
                                     }
                                     if (cursor == 0) { // adapter
-                                        fansAdapter = new FansAdapter(fans);
-                                        fansAdapter.setHasStableIds(true);
-                                        fansHeaderAdapter = new FansHeaderAdapter();
-                                        adapter = new ExtendAdapter(fansHeaderAdapter, fansAdapter, true);
+                                        followAdapter = new FollowAdapter(fans);
+                                        followAdapter.setHasStableIds(true);
+                                        adapter = new ExtendAdapter(followAdapter, true);
                                         binding.recylerview.setAdapter(adapter.getAdapter());
                                     } else {
-                                        int p = fansAdapter.getItemCount();
-                                        fansAdapter.addDate(fans);
-                                        fansAdapter.notifyItemRangeInserted(p,fans.size());
+                                        int p = followAdapter.getItemCount();
+                                        followAdapter.addDate(fans);
+                                        followAdapter.notifyItemRangeInserted(p,fans.size());
                                     }
                                 } else if (adapter == null) {
                                     binding.msgText.setVisibility(View.VISIBLE);
                                     binding.msgText.setText("没有更多了");
                                 }
-                                fansHeaderAdapter.setFansCount(FansData.getTotal());
                                 binding.msgText.setVisibility(View.GONE);
                                 hasMore = FansData.isHasMore();
                                 if (!hasMore || cursor == 0) {
@@ -162,6 +146,7 @@ public class FansFragment extends Fragment {
                             }, new ErrorConsumer() {
                                 @Override
                                 protected void error(NetException e) {
+                                    binding.loading.setVisibility(View.GONE);
                                     Toast.makeText(requireContext(),"获取个人作品失败：" + e.getMsg(), Toast.LENGTH_SHORT).show();
                                     binding.msgText.setVisibility(View.VISIBLE);
                                     binding.msgText.setText(e.getMsg());

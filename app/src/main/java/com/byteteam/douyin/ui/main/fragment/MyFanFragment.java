@@ -126,9 +126,9 @@ public class MyFanFragment extends Fragment {
                     binding.msgText.setText("应用未授权");
                 })
                 .subscribe(accessToken -> {
-                    binding.loading.setVisibility(View.GONE);
                     disposable.add(vm.queryMyFans(accessToken, cursor)
                             .subscribe(myFansData -> {
+                                binding.loading.setVisibility(View.GONE);
                                 List<MyFans> myFans = myFansData.getList();
                                 if (myFans.size() > 0) {
                                     if (adapter == null) {
@@ -159,6 +159,7 @@ public class MyFanFragment extends Fragment {
                             }, new ErrorConsumer() {
                                 @Override
                                 protected void error(NetException e) {
+                                    binding.loading.setVisibility(View.GONE);
                                     Toast.makeText(requireContext(),"获取个人作品失败：" + e.getMsg(), Toast.LENGTH_SHORT).show();
                                     binding.msgText.setVisibility(View.VISIBLE);
                                     binding.msgText.setText(e.getMsg());

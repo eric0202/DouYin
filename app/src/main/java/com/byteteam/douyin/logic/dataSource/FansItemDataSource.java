@@ -1,9 +1,6 @@
 package com.byteteam.douyin.logic.dataSource;
 
-import com.byteteam.douyin.logic.network.model.FansData;
-import com.byteteam.douyin.logic.network.model.WorksResponse;
-
-import java.util.List;
+import com.byteteam.douyin.logic.network.model.FollowData;
 
 import io.reactivex.Maybe;
 
@@ -15,5 +12,5 @@ import io.reactivex.Maybe;
 
 public interface FansItemDataSource {
     // 根据cursor查询粉丝列表
-    Maybe<FansData> queryFans(String accessToken, String openId, long cursor);
+    Maybe<FollowData> queryFans(String accessToken, String openId, long cursor);
 }
