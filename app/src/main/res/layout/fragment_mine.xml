@@ -295,13 +295,13 @@
                             app:cardCornerRadius="10dp">
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/store"
                                 android:id="@+id/img_store"
-                                android:scaleType="centerInside"
+                                android:layout_width="53dp"
+                                android:layout_height="52dp"
                                 android:background="@color/light_gray"
-                                android:padding="10dp"/>
+                                android:padding="10dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/store" />
 
                         </androidx.cardview.widget.CardView>
 

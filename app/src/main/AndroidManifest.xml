@@ -25,25 +25,25 @@
         android:theme="@style/Theme.Douyin"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.LottieActivity"
-            android:exported="true" >
+            android:name=".ui.rank.FansActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.rank.FansListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="false">
-
         </activity>
         <activity
             android:name=".douyinapi.DouYinEntryActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:taskAffinity="com.byteteam.douyin"></activity>
+            android:taskAffinity="com.byteteam.douyin" />
         <activity
             android:name=".ui.rank.RankActivity"
             android:exported="false" />
