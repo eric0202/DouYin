@@ -4,6 +4,8 @@
     package="com.byteteam.douyin">
     <!-- 联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <queries>
 
@@ -24,14 +26,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Douyin"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".ui.rank.FansActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".ui.rank.FansActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.rank.FansListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.rank.FansActivity"
+            android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.LottieActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,12 +53,15 @@
             android:taskAffinity="com.byteteam.douyin" />
         <activity
             android:name=".ui.rank.RankActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.rank.RankListActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.video.VideoActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
     </application>
 

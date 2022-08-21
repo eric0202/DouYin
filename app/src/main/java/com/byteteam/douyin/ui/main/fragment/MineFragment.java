@@ -1,8 +1,12 @@
 package com.byteteam.douyin.ui.main.fragment;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,8 +17,12 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -23,11 +31,15 @@ import com.byteteam.douyin.R;
 import com.byteteam.douyin.databinding.FragmentMineBinding;
 import com.byteteam.douyin.douyinapi.ApiUtil;
 import com.byteteam.douyin.logic.dataSource.UserDataSource;
+import com.byteteam.douyin.logic.database.dao.UserDao;
 import com.byteteam.douyin.logic.database.model.User;
+import com.byteteam.douyin.logic.factory.DaoFactory;
 import com.byteteam.douyin.logic.factory.RepositoryFactory;
 import com.byteteam.douyin.ui.main.adapter.PlaceholderFragment;
 import com.byteteam.douyin.ui.rank.adapter.ViewPagerAdapter;
+import com.byteteam.douyin.ui.rank.fragment.FansFragment;
 import com.byteteam.douyin.util.AnimationUtil;
+import com.byteteam.douyin.util.UriUtil;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -51,12 +63,15 @@ public class MineFragment extends Fragment {
 
     private FragmentMineBinding binding;
 
+
     @Override
     public void onStart() {
         super.onStart();
         doSubscribe();
     }
 
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            this::updateUser);
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -87,7 +102,7 @@ public class MineFragment extends Fragment {
         // 设置滑动布局
         List<Fragment> list = new ArrayList<>();
         list.add(WorksFragment.newInstance());
-        list.add(PlaceholderFragment.newInstance(1));
+        list.add(FansFragment.newInstance(1));
         list.add(MyFanFragment.newInstance());
         ViewPagerAdapter adapter = new ViewPagerAdapter(list, getParentFragmentManager(), getLifecycle());
         binding.viewPager.setAdapter(adapter);
@@ -129,6 +144,25 @@ public class MineFragment extends Fragment {
 
     }
 
+    // 从数据库更新user
+    @SuppressLint("CheckResult")
+    private void updateUser(Uri background) {
+        System.out.println("updateUser:" + background);
+        UserDataSource userDataSource = RepositoryFactory.provideLocalUserDataRepository(getContext());
+        userDataSource.queryUser()
+                .doOnComplete(()->{
+                    Toast.makeText(requireContext(),"FAILED TO GET USER",Toast.LENGTH_SHORT).show();
+                })
+                .subscribe(user -> {
+                    UserDao userDao = DaoFactory.provideUserDao(getContext());
+
+                    User newUser = new User(user);
+                    newUser.setBackground(UriUtil.convertUriToPath(getContext(),background));
+                    userDao.insertUser(newUser);
+                    displayUser(newUser);
+                });
+    }
+
     // 从数据库加载user
     @SuppressLint("CheckResult")
     private void initUser() {
@@ -165,10 +199,17 @@ public class MineFragment extends Fragment {
 
                 case R.id.settings:
                     showNoFunction();
-                case R.id.logout:
-                    // todo
                 case R.id.change_bg:
-                    // todo
+                    // 更改背景图
+                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(getContext(),"permission allowed",Toast.LENGTH_LONG).show();
+                        mGetContent.launch("image/*");
+                    }else{
+                        requestStoragePermission();
+
+                    }
+                    return true;
 
             }
 
@@ -179,6 +220,19 @@ public class MineFragment extends Fragment {
 
     }
 
+    private void requestStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            Toast.makeText(getContext(),"permission allowed",Toast.LENGTH_LONG).show();
+
+        } else {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            Toast.makeText(getContext(),"permission denied",Toast.LENGTH_LONG).show();
+        }
+    }
 
     // ui中展示user信息
     private void displayUser(User user) {
@@ -202,6 +256,15 @@ public class MineFragment extends Fragment {
             if (!Objects.equals(user.getNickname(), "")) {
                 binding.tvValueNickname.setText(user.getNickname());
             }
+
+
+            RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
+            if (user.getBackground() != null && !Objects.equals(user.getBackground(), "")) {
+                Glide.with(requireContext()).load(user.getBackground()).apply(options1).into(binding.imgWall);
+            }else{
+                Glide.with(this).load(R.drawable.wall).apply(options1).into(binding.imgWall);
+            }
+
             binding.tvValueGender.setText(user.getGender());
 
             if (Objects.equals(user.getAvatar(), "")) {
@@ -209,6 +272,7 @@ public class MineFragment extends Fragment {
             } else {
                 Glide.with(this).load(user.getAvatar()).apply(options).into(binding.imgAvatar);
             }
+
 
         }
 
@@ -237,8 +301,6 @@ public class MineFragment extends Fragment {
     public void setDefaultBg() {
         RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
         Glide.with(this).load(R.drawable.r_key).apply(options).into(binding.imgAvatar);
-        RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50, 1));
-        Glide.with(this).load(R.drawable.wall).apply(options1).into(binding.imgWall);
     }
 
     public void showNoFunction() {

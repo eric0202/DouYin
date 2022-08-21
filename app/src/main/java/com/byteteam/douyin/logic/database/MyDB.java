@@ -31,7 +31,7 @@ import com.byteteam.douyin.logic.database.model.Works;
  * @time： 2022/8/7 18:10
  */
 @Database(entities = {AccessToken.class, ClientToken.class, RankItem.class, RankList.class
-        , User.class, FansItem.class, Works.class, MyFans.class}, version = 8)
+        , User.class, FansItem.class, Works.class, MyFans.class}, version = 9)
 @TypeConverters({StringArrayConverters.class})
 public abstract class MyDB extends RoomDatabase {
 

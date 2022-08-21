@@ -12,9 +12,9 @@ import com.bytedance.sdk.open.douyin.DouYinOpenConfig;
  */
 public class MyApplication extends Application {
 
-    public static final String clientkey = "awooog0as21zbmrl";
+    public static final String clientkey = "awe756uumsrb0pqt";
 
-    public static final String clientSecret = "74fdcb426b3034f6219fdb3d89c04982";
+    public static final String clientSecret = "7674ef60b7318a62bcd119fe1af2bd52";
 
     @Override
     public void onCreate() {

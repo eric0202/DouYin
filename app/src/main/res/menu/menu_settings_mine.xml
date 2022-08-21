@@ -10,10 +10,6 @@
         android:title="@string/settings"/>
 
     <item
-        android:id="@+id/logout"
-        android:title="@string/logout"/>
-
-    <item
         android:id="@+id/change_bg"
         android:title="@string/change_bg"/>
 

@@ -1,5 +1,9 @@
 package com.byteteam.douyin.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @introduction： 字符串工具类
  * @author： 林锦焜
@@ -32,6 +36,15 @@ public class StringUtil {
         } else {
             return String.format("%.1f万",num / 10000.0);
         }
+    }
+
+    /**
+     * 将时间戳转成日期
+     */
+    public static String timeToDate(Long time) {
+        Date date = new Date();
+        DateFormat dateInstance = SimpleDateFormat.getDateTimeInstance();
+        return dateInstance.format(date);
     }
 
 }

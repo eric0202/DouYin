@@ -7,6 +7,7 @@
             name="item"
             type="com.byteteam.douyin.logic.database.model.Works" />
         <import type="android.view.View"/>
+        <import type="com.byteteam.douyin.util.StringUtil"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@{item.cover, default = `@mipmap/ic_film`}"
+            app:srcCompat="@{item.cover, default = `@mipmap/ic_rank`}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{`时间：` + item.createTime, default = `时间：`}"
+                android:text="@{StringUtil.timeToDate(item.createTime), default = `时间：`}"
                 android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 android:gravity="center_vertical"

@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.byteteam.douyin.R;
 import com.byteteam.douyin.logic.network.response.DouYinBaseData;
 
 /**
@@ -35,6 +34,28 @@ public class User extends DouYinBaseData {
 
     @ColumnInfo
     private String gender;
+
+    @ColumnInfo
+    private String background;
+
+    public String getBackground() {
+        return background;
+    }
+
+
+    public User(User user){
+        this.open_id = user.open_id;
+        this.gender = user.gender;
+        this.city = user.city;
+        this.avatar = user.avatar;
+        this.country = user.country;
+        this.background = user.background;
+        this.nickname = user.nickname;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
 
     private String introduction;
 
@@ -117,14 +138,16 @@ public class User extends DouYinBaseData {
     }
 
     public String getGender() {
-        switch (gender){
-            case "1":
-                return "男";
-            case "2":
-                return "女";
-            default:
-                return "未知性别";
+        if(gender == "1"){
+            return "男";
         }
+        else if (gender == "2"){
+            return "女";
+        }
+        else {
+            return "未知性别";
+        }
+
     }
 
     public void setGender(String gender) {
@@ -149,6 +172,7 @@ public class User extends DouYinBaseData {
                 ", \tcity= " + city +
                 ", \tcountry= "+ country+
                 ", \tgender= "+ gender+
+                ", \tbackground= "+ background+
                 ", \tintroduction= "+introduction+ "}";
     }
 
