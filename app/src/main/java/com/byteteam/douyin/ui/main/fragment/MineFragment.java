@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.Rotate;
 import com.bumptech.glide.request.RequestOptions;
 import com.byteteam.douyin.R;
@@ -323,7 +324,8 @@ public class MineFragment extends Fragment {
             }
 
 
-            RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
+//            RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
+            RequestOptions options1 = RequestOptions.bitmapTransform(new CenterInside());
             if (user.getBackground() != null && !Objects.equals(user.getBackground(), "")) {
                 Glide.with(requireContext()).load(user.getBackground()).apply(options1).into(binding.imgWall);
             }else{
