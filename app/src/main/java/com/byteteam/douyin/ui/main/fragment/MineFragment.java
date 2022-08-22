@@ -203,6 +203,11 @@ public class MineFragment extends Fragment {
                     Log.e("NewUser",newUser.toString());
                     userDao.deleteUser(user);
                     userDao.insertUser(newUser);
+
+                    // todo
+                    RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
+                    Glide.with(requireContext()).load(UriUtil.convertUriToPath(getContext(),background)).apply(options1).into(binding.imgWall);
+
                     displayUser(newUser);
                 });
     }
@@ -321,7 +326,7 @@ public class MineFragment extends Fragment {
             if (user.getBackground() != null && !Objects.equals(user.getBackground(), "")) {
                 Glide.with(requireContext()).load(user.getBackground()).apply(options1).into(binding.imgWall);
             }else{
-                Glide.with(this).load(R.drawable.wall).apply(options1).into(binding.imgWall);
+//                Glide.with(this).load(R.drawable.wall).apply(options1).into(binding.imgWall);
             }
 
             binding.tvValueGender.setText(user.getGender());
