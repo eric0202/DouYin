@@ -25,13 +25,8 @@ public class LottieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottie);
-
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-
         lottieAnimationView = findViewById(R.id.lottie);
-
-
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);

@@ -103,6 +103,7 @@ public class MineFragment extends Fragment {
         };
 
         @SuppressLint("CheckResult") View.OnClickListener getUserListener = view -> {
+
             UserDataSource userDataSource = RepositoryFactory.provideUserDataRepository(getContext());
             userDataSource.queryUser()
                     .doOnComplete(() -> {
@@ -309,6 +310,7 @@ public class MineFragment extends Fragment {
         RequestOptions options = RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation(3, Color.WHITE));
 
 
+
         // 判断user是否为空
         if (user.getOpen_id().equals("")) {
             binding.tvValueNickname.setText(R.string.tap2login);
@@ -326,6 +328,8 @@ public class MineFragment extends Fragment {
                 binding.tvValueNickname.setText(user.getNickname());
             }
 
+            binding.tvValueSubs.setText("1");
+            binding.tvValueFollows.setText("1");
 
 //            RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(50,1));
             RequestOptions options1 = RequestOptions.bitmapTransform(new CenterInside());
@@ -377,4 +381,6 @@ public class MineFragment extends Fragment {
         Toast.makeText(requireContext(), "功能正在开发,即将上线...", Toast.LENGTH_SHORT).show();
     }
 
+
 }
+

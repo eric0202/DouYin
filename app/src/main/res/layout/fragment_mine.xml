@@ -456,7 +456,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="0dp"
             android:background="@color/white"/>
 
         <com.google.android.material.tabs.TabLayout
