@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -83,8 +84,8 @@ public class MineFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentMineBinding.inflate(getLayoutInflater(), container, false);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(requireActivity().getTitle());
+
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         noFunctionListener = new View.OnClickListener() {
             @Override
@@ -253,7 +254,7 @@ public class MineFragment extends Fragment {
                     // 更改背景图
                     if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                             == PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(getContext(),"permission allowed",Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(),"permission allowed",Toast.LENGTH_LONG).show();
                         mGetContent.launch("image/*");
                     }else{
                         requestStoragePermission();
@@ -289,14 +290,16 @@ public class MineFragment extends Fragment {
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-            Toast.makeText(getContext(),"permission allowed",Toast.LENGTH_LONG).show();
-            mGetContent.launch("image/*");
+//            Toast.makeText(getContext(),"permission allowed",Toast.LENGTH_LONG).show();
 
         } else {
 
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            Toast.makeText(getContext(),"permission denied",Toast.LENGTH_LONG).show();
+
+            mGetContent.launch("image/*");
+
+//            Toast.makeText(getContext(),"permission denied",Toast.LENGTH_LONG).show();
         }
     }
 
