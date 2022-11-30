@@ -1,4 +1,5 @@
 # byte_douyin
 字节跳动青训营_极简抖音_byte组
 
-部分展示: https://nje8ca65uz.feishu.cn/docx/doxcnckvDvaYMrJX1qRI1X1oQjh?from=from_copylink
+部分展示: https://zeknes.github.io/2022/08/27/bytedance-android-group-report/
+ui展示:  https://zeknes.github.io/2022/08/31/bytedance-project-ui-detail/
